@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     isLoginPage() {
-      return this.$route.path === '/login';
+      return this.$route.path === '/login' || this.$route.path === '/register';
     },
   },
 };

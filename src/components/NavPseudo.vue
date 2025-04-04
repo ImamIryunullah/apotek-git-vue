@@ -1,6 +1,6 @@
 <template>
     <div class="bg-emerald-600 font-Roboto text-white relative">
-        <div class="flex justify-between items-center px-10 py-6">
+        <div class="flex justify-between items-center px-6 py-2">
             <!-- Menu Navigasi -->
             <div class="flex space-x-4 items-center">
                 <div>
@@ -12,12 +12,12 @@
                     </h1>
                 </div>
                 <div class="flex space-x-1">
-                    <div v-for="menu in menus" :key="menu.id" class="relative group pb-[0.05rem]">
+                    <div v-for="menu in menus" :key="menu.id" class="relative group pb-[0.02rem]">
                         <h1 :class="[
-                            'cursor-pointer px-5 py-6 text-lg font-semibold uppercase transition-all duration-300',
+                            'cursor-pointer px-6 py-4 text-lg font-semibold uppercase transition-all duration-300',
                             activeMenu === menu.path
                                 ? 'bg-white text-emerald-600 rounded-t-lg shadow-md'
-                                : 'hover:bg-emerald-500 hover:text-emerald-200 hover:rounded-t-lg font-bold',
+                                : 'hover:bg-emerald-500 hover:text-emerald-200 hover:rounded-t-lg font-sm',
                         ]" @click="setActiveMenu(menu.path)">
                             {{ menu.nama }}
                         </h1>
@@ -77,63 +77,3 @@ export default {
     },
 };
 </script>
-
-<!-- <template>
-    <div class="bg-emerald-600 font-Roboto text-white relative">
-        <div class="flex space-x-4 pt-6 pb-0 px-10 items-center">
-            <div>
-                <h1>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#E2DFD0" viewBox="0 0 24 24" stroke-width="4.5"
-                        stroke="#E2DFD0" class="size-14">
-                        <path stroke-linecap="none" stroke-linejoin="none" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </h1>
-            </div>
-            <div class="flex space-x-1">
-                <div v-for="menu in menus" :key="menu.id" class="relative group pb-[0.05rem]">
-                    <h1 :class="[
-                        'cursor-pointer px-10 py-6 text-lg font-semibold uppercase transition-all duration-300',
-                        activeMenu === menu.path
-                            ? 'bg-white text-emerald-600 rounded-t-lg shadow-md'
-                            : 'hover:bg-emerald-500 hover:text-emerald-200 hover:rounded-t-lg font-bold',
-                    ]" @click="setActiveMenu(menu.path)">
-                        {{ menu.nama }}
-                    </h1>
-                    <div v-if="activeMenu === menu.path" class="absolute bottom-0 left-0 right-0 h-1 bg-white"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            activeMenu: "/",
-            menus: [
-                { id: 1, nama: "Dashboard", path: "/" },
-                { id: 2, nama: "Managemen Obat", path: "/management" },
-                { id: 3, nama: "Stok Obat", path: "/stok" },
-                { id: 4, nama: "Histori Transaksi", path: "/transaksi" },
-                { id: 5, nama: "pemasok", path: "/pemasok" },
-                { id: 6, nama: "Pembukuan", path: "/pembukuan" },
-            ],
-        };
-    },
-    methods: {
-        setActiveMenu(path) {
-            this.activeMenu = path;
-            this.$router.push(path);
-        },
-    },
-    watch: {
-        $route(to) {
-            this.activeMenu = to.path;
-        },
-    },
-    mounted() {
-        this.activeMenu = this.$route.path;
-    },
-};
-</script> -->

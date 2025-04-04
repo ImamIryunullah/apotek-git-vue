@@ -22,6 +22,9 @@ export default {
   postLogin(datass) {
     return axios.post(`${baseURL}/login`, datass);
   },
+  postSignup(datass) {
+    return axios.post(`${baseURL}/user`, datass);
+  },
   // Obat management
   getObat() {
     return API.get(`${baseURL}/obat`);

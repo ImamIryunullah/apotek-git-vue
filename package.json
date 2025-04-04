@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --host 0.0.0.0",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "npm run build && sudo cp -r dist/ /var/www/apotek/",
+     "watch-build": "nodemon --watch src --ext js,vue --exec \"npm run deploy\""
   },
   "dependencies": {
     "@google/genai": "^0.7.0",
@@ -29,6 +31,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "nodemon": "^3.1.9",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17"
   },

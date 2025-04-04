@@ -4,7 +4,7 @@
         <div class="font-Roboto tracking-wider ">
             <div class="bg-white -mx-10 flex items-center justify-between px-20">
                 <div>
-                    <div class="flex space-x-4 py-6 relative -left-6">
+                    <div class="flex space-x-3 py-4 relative -left-6">
                         <div>
                             <div>
                                 <div @click="dropdownKodeObat"
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div>
-                            <div class="bg-emerald-600 hover:bg-emerald-700 border border-black rounded-lg">
+                            <div class="bg-red-600 hover:bg-emerald-700 border border-black rounded-lg">
                                 <button class="px-6 py-2 font-bold text-white">
                                     <h1>Filter</h1>
                                 </button>
@@ -113,8 +113,8 @@
                 1].stok_akhir > 0)" :key="obat.nama_obat"
                 class="p-4 capitalize text-white max-w-[50rem] h-[38rem] bg-emerald-600 rounded-xl border-2 border-black py-6"> -->
             <div v-for="obat in dataObat.filter((obats) => obats.stok.length > 0)" :key="obat.nama_obat"
-                class="p-4 capitalize text-white max-w-96 h-50 bg-emerald-600 rounded-xl border-2 border-black py-6">
-                <div>
+                class="p-4 capitalize text-white max-w-96 h-[55rem] bg-emerald-600 rounded-xl border-2 border-black py-6 flex flex-col justify-between">
+                <div class="flex-1">
                     <div class="px-4">
                         <div class="border-2 border-black rounded-2xl bg-gray-100">
                             <img :src="getFullImgPath(obat.gambar_obat)" class="w-60 max-h-44 object-cover mx-auto"
@@ -151,33 +151,32 @@
                             <h1 class="text-base text-white">{{ obat.deskripsi }}</h1>
                         </div>
                         <div class="bg-black h-0.5"></div>
-                        <div>
-                            <div class="space-y-4">
-                                <!-- Tag -->
-                                <div class="flex space-x-4 items-start">
-                                    <div class="pt-2 font-semibold">
-                                        <h1>Tag:</h1>
-                                    </div>
-                                    <div class="flex flex-wrap gap-2">
-                                        <div v-for="tag in obat.tags" :key="tag.id_tag_obat"
-                                            class="bg-white text-black border border-black px-4 py-2 rounded-2xl">
-                                            {{ tag.nama_tag }}
-                                        </div>
-                                    </div>
+                        <div class="space-y-4">
+                            <!-- Tag -->
+                            <div>
+                                <div class="font-semibold mb-1">
+                                    <h1>Tag:</h1>
                                 </div>
-
-                                <!-- Tipe Obat -->
-                                <div class="flex space-x-4 items-center">
-                                    <div class="pt-2 font-semibold">
-                                        <h1>Tipe Obat:</h1>
-                                    </div>
-                                    <div class="bg-white text-black border border-black px-4 py-2 rounded-2xl">
-                                        {{ obat.tipe_obat.nama_tipe }}
+                                <div class="flex flex-wrap gap-2 break-words">
+                                    <div v-for="tag in obat.tags" :key="tag.id_tag_obat"
+                                        class="bg-white text-black border border-black px-4 py-2 rounded-2xl text-sm">
+                                        {{ tag.nama_tag }}
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- Tipe Obat -->
+                            <div>
+                                <div class="font-semibold mb-1">
+                                    <h1>Tipe Obat:</h1>
+                                </div>
+                                <div
+                                    class="bg-white text-black border border-black px-4 py-2 rounded-2xl text-sm inline-block">
+                                    {{ obat.tipe_obat.nama_tipe }}
+                                </div>
+                            </div>
                         </div>
+
                         <div class="flex justify-between pt-4 py-20 m-10">
                             <div class="flex space-x-6 px-4 py-2 bg-white border rounded-xl border-black h-[4rem]">
                                 <button @click="minus(obat)" class="pl-2 pt-2">
@@ -302,7 +301,7 @@
     </div>
     <div>
         <!-- Floating Checkout Button -->
-        <div class="fixed bottom-5 right-5">
+        <div class="fixed bottom-20 right-5">
             <div class="flex justify-center">
 
                 <button @click="showDetail(obatCheckout)"

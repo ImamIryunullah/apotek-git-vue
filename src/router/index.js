@@ -8,7 +8,7 @@ import PemasokPseudo from "@/views/PemasokPseudo.vue";
 import LoginPseudo from "@/views/LoginPseudo.vue";
 import PelangganList from "@/components/PelangganList.vue";
 import VerifTransaksi from "@/components/VerifTransaksi.vue";
-
+import SignUp from "@/views/SignUp.vue";
 const routes = [
   {
     path: "/",
@@ -53,6 +53,12 @@ const routes = [
     meta: { requiresAuth: false },
   },
   {
+    path: "/register",
+    name: "Register",
+    component: SignUp,
+    meta: { requiresAuth: false },
+  },
+  {
     path: "/pelanggan",
     name: "pelanggan",
     component: PelangganList,
@@ -77,7 +83,6 @@ const router = createRouter({
     }
   },
 });
-
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
