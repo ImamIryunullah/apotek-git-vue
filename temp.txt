@@ -1,0 +1,20 @@
+//
+                    this.dataObat.forEach((obat) => {
+                        if (obat.nilai > 0) {
+                            const updatedStok = {
+                                jumlah: obat.stok.jumlah - obat.nilai,
+                                tipe_transaksi: "KELUAR"
+                            };
+
+                            Api.updateStok(obat.stok.id, updatedStok)
+                                .then(() => {
+                                    console.log(`Stok untuk ${obat.nama_obat} berhasil diperbarui.`);
+                                    setTimeout(() => {
+                                        window.location.reload()
+                                    }, 200);
+                                })
+                                .catch((err) => {
+                                    console.error(`Gagal memperbarui stok untuk ${obat.nama_obat}.`, err);
+                                });
+                        }
+                    });
