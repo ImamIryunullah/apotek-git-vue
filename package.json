@@ -7,9 +7,10 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "deploy": "npm run build && sudo cp -r dist/ /var/www/apotek/",
-     "watch-build": "nodemon --watch src --ext js,vue --exec \"npm run deploy\""
+    "watch-build": "nodemon --watch src --ext js,vue --exec \"npm run deploy\""
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@google/genai": "^0.7.0",
     "@google/generative-ai": "^0.24.0",
     "axios": "^1.7.9",
@@ -33,6 +34,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "nodemon": "^3.1.9",
     "postcss": "^8.5.1",
+    "prettier": "3.5.3",
     "tailwindcss": "^3.4.17"
   },
   "eslintConfig": {

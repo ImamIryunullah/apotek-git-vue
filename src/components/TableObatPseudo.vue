@@ -1,7 +1,8 @@
 <template>
-  <div class="font-Roboto tracking-wider px-4 py-6">
-    <div class="flex pb-6">
-      <div @click="openCreateModal" class="bg-emerald-600 hover:bg-emerald-700 border border-black rounded-lg">
+  <div class="bg-white -mx-10 flex items-center justify-between px-20">
+    <div>
+      <div class="flex space-x-4 py-6 relative -left-6">
+        <div @click="openCreateModal" class="bg-emerald-600 hover:bg-emerald-700 border border-black rounded-lg">
         <button class="px-6 py-2 text-white font-bold">
           <h1>Tambah Obat</h1>
         </button>
@@ -11,14 +12,75 @@
         <button class="px-6 py-2 text-white font-bold">
           <h1>Tambah Obat Excel</h1>
         </button>
+
       </div>
+        <div>
+          <div>
+            <div class="relative">
+              <!-- <div @click="dropdownJenisObat" class="bg-white border border-black rounded-lg cursor-pointer w-52">
+                <div class="flex justify-between items-center px-4">
+                  <button class="px-2 py-2">
+                    <h1>Tipe Transaksi</h1>
+                  </button>
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </div>
+                </div>
+              </div> -->
+              <!-- <div v-if="isJenisObatOpen" class="absolute bg-white border border-black mt-2 rounded-lg shadow-lg w-52">
+                <div class="flex flex-col divide-y divide-gray-200">
+                  <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
+                    <input type="checkbox">
+                    <h1>Tablet</h1>
+                  </label>
+                  <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
+                    <input type="checkbox">
+                    <h1>Tablet - Generik</h1>
+                  </label>
+                  <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
+                    <input type="checkbox">
+                    <h1>Sirup</h1>
+                  </label>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div>
+          <!-- <div class="bg-emerald-600 hover:bg-emerald-700 border border-black rounded-lg">
+            <button class="px-6 py-2 font-bold text-white">
+              <h1>Filter</h1>
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end space-x-6">
+      <div>
+        <input @input="SearchData" v-model="searchInput"
+          class="bg-gray-100 border-2 border-black pl-4 w-[30rem] h-[2.8rem] capitalize rounded-lg" type="text"
+          placeholder="Cari disini...">
+      </div>
+      <div class="bg-emerald-600 hover:bg-emerald-700 border border-black rounded-lg">
+        <button class="px-6 py-2 font-bold text-white">
+          <h1>Cari</h1>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="font-Roboto tracking-wider px-4 py-6">
+    <div class="flex pb-6">
+     
     </div>
     <div class="flex pb-2"></div>
     <div class="overflow-x-auto font-Roboto">
       <table class="min-w-full bg-white border border-gray-200 shadow-md text-base rounded-lg">
         <thead>
           <tr class="bg-gray-200 text-left">
-            <th class="pl-10 py-3 border-b border-gray-300">ID Obat</th>
+            <th class="pl-10 py-3 border-b border-gray-300">No</th>
             <th class="pl-10 py-3 border-b border-gray-300">Nama Obat</th>
             <th class="pl-10 py-3 border-b border-gray-300">Kode Obat</th>
             <th class="px-4 py-3 border-b border-gray-300">Gambar</th>
@@ -127,379 +189,350 @@
       </div>
     </div>
   </div>
-  <div v-if="showModal" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
-    <div class="bg-white rounded-lg shadow-lg pt-10 pb-16 w-[30rem]">
-      <div class="-mt-6 pb-4">
-        <div class="flex justify-end pr-6 pt-2">
-          <button @click="closeModal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"
-              class="hover:fill-red-600">
-              <path
-                d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z">
-              </path>
-            </svg>
-          </button>
-        </div>
-        <div>
-          <h2 class="text-lg font-semibold text-center">Edit Obat</h2>
-        </div>
+  <div v-if="showModal" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50 px-4">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
+      <!-- Close Button -->
+      <div class="absolute top-4 right-4">
+        <button @click="closeModal" class="hover:scale-110 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256"
+            class="hover:fill-red-600">
+            <path
+              d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z" />
+          </svg>
+        </button>
       </div>
-      <div class="border-b-2"></div>
-      <form @submit.prevent="updateObat" class="pt-4 max-h-[750px] overflow-y-auto">
-        <table class="flex justify-center">
-          <tbody>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Nama Obat</th>
-              <td>
-                <input v-model="selectedObat.nama_obat" type="text"
-                  class="w-full py-2 pl-2 border border-gray-300 rounded" />
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Kode Obat</th>
-              <td>
-                <label class="w-full pr-20 py-2 pl-2 margin border border-gray-300 rounded"> {{
-                  generateKodeObat(selectedObat.nama_obat) }}</label>
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Dosis</th>
-              <td>
-                <input v-model="selectedObat.dosis_obat" type="text"
-                  class="w-full py-2 pl-2 border border-gray-300 rounded" />
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Golongan Obat</th>
-              <td>
-                <input v-model="selectedObat.golongan_obat" type="text"
-                  class="w-full py-2 pl-2 border border-gray-300 rounded" />
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Merk Obat</th>
-              <td>
-                <input v-model="selectedObat.merk_obat" type="text"
-                  class="w-full py-2 pl-2 border border-gray-300 rounded" />
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Resep Dokter</th>
-              <td>
-                <select v-model="selectedObat.is_prescription" class="w-full py-2 pl-2 border border-gray-300 rounded">
-                  <option :value="true">Ya</option>
-                  <option :value="false">Tidak</option>
-                </select>
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Pemasok</th>
-              <td>
-                <select v-model="selectedObat.id_pemasok" class="w-full p-2 border border-gray-300 rounded" required>
-                  <option v-for="pemasok in pemasoks" :key="pemasok.id_pemasok" :value="pemasok.id_pemasok">
-                    {{ pemasok.nama }}
-                  </option>
-                </select>
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Deskripsi</th>
-              <td>
-                <textarea v-model="selectedObat.deskripsi"
-                  class="w-full h-[5.5rem] pl-2 border border-gray-300 rounded"></textarea>
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Tipe Obat</th>
-              <td>
-                <select v-model="selectedObat.id_tipe_obat" class="w-full p-2 border border-gray-300 rounded" required>
-                  <option v-for="tipe in tipeObats" :key="tipe.id_tipe_obat" :value="tipe.id_tipe_obat">
-                    {{ tipe.nama_tipe }}
-                  </option>
-                </select>
-              </td>
-            </tr>
-            <!-- <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Tag</th>
-              <td>
-                <input v-model="selectedObat.tags[0].nama_tag" type="checkbox"
-                  class="w-full py-2 pl-2 border border-gray-300 rounded" />
-              </td>
-            </tr> -->
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Tag Obat</th>
-              <td>
-                <div class="max-h-40 overflow-y-auto border border-gray-300 rounded p-2">
-                  <div v-for="tag in tagObats" :key="tag.id_tag_obat">
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" :value="tag.id_tag_obat" v-model="selectedTags" />
-                      <span>{{ tag.nama_tag }}</span>
-                    </label>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Harga Beli</th>
-              <td>
-                <input v-model="formattedHarga.harga_beli" type="text"
-                  class="w-full py-2 pl-2 border border-gray-300 rounded" />
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Harga Jual</th>
-              <td>
-                <input v-model="formattedHarga.harga_jual" type="text"
-                  class="w-full py-2 pl-2 border border-gray-300 rounded" />
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Margin</th>
-              <td>
-                <label class="w-full pr-20 py-2 pl-2 margin border border-gray-300 rounded"> {{
-                  formattedRupiah(selectedObat.harga_jual -
-                    selectedObat.harga_beli) }}</label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="flex justify-end pr-12 mt-8">
-          <button type="submit" class="px-4 py-2 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-700">
+
+      <!-- Title -->
+      <div class="pt-6 px-6">
+        <h2 class="text-xl font-semibold text-center mb-4">Edit Obat</h2>
+      </div>
+
+      <div class="border-b"></div>
+
+      <!-- Form -->
+      <form @submit.prevent="updateObat" class="p-6 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-medium mb-1">Nama Obat</label>
+            <input v-model="selectedObat.nama_obat" type="text"
+              class="w-full border border-gray-300 rounded px-2 py-2" />
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Kode Obat</label>
+            <div class="border border-gray-300 rounded px-2 py-2">{{ generateKodeObat(selectedObat.nama_obat) }}</div>
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Dosis</label>
+            <input v-model="selectedObat.dosis_obat" type="text"
+              class="w-full border border-gray-300 rounded px-2 py-2" />
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Golongan Obat</label>
+            <input v-model="selectedObat.golongan_obat" type="text"
+              class="w-full border border-gray-300 rounded px-2 py-2" />
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Merk Obat</label>
+            <input v-model="selectedObat.merk_obat" type="text"
+              class="w-full border border-gray-300 rounded px-2 py-2" />
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Resep Dokter</label>
+            <select v-model="selectedObat.is_prescription" class="w-full border border-gray-300 rounded px-2 py-2">
+              <option :value="true">Ya</option>
+              <option :value="false">Tidak</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Pemasok</label>
+            <select v-model="selectedObat.id_pemasok" class="w-full border border-gray-300 rounded px-2 py-2">
+              <option v-for="pemasok in pemasoks" :key="pemasok.id_pemasok" :value="pemasok.id_pemasok">
+                {{ pemasok.nama }}
+              </option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Tipe Obat</label>
+            <select v-model="selectedObat.id_tipe_obat" class="w-full border border-gray-300 rounded px-2 py-2">
+              <option v-for="tipe in tipeObats" :key="tipe.id_tipe_obat" :value="tipe.id_tipe_obat">
+                {{ tipe.nama_tipe }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-medium mb-1">Deskripsi</label>
+          <textarea v-model="selectedObat.deskripsi"
+            class="w-full border border-gray-300 rounded px-2 py-2 h-24"></textarea>
+        </div>
+
+        <!-- Tag Checkbox -->
+        <div>
+          <label class="block font-medium mb-1">Tag Obat</label>
+          <div class="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto border border-gray-300 rounded p-2">
+            <div v-for="tag in tagObats" :key="tag.id_tag_obat">
+              <label class="flex items-center space-x-2">
+                <input type="checkbox" :value="tag.id_tag_obat" v-model="selectedTags" />
+                <span>{{ tag.nama_tag }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Harga Section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-medium mb-1">Harga Beli</label>
+            <input v-model="formattedHarga.harga_beli" type="text"
+              class="w-full border border-gray-300 rounded px-2 py-2" />
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Harga Jual</label>
+            <input v-model="formattedHarga.harga_jual" type="text"
+              class="w-full border border-gray-300 rounded px-2 py-2" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block font-medium mb-1">Margin</label>
+            <div class="border border-gray-300 rounded px-2 py-2">
+              {{ formattedRupiah(selectedObat.harga_jual - selectedObat.harga_beli) }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-end mt-6">
+          <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded">
             Save Changes
           </button>
         </div>
       </form>
     </div>
   </div>
-  <div v-if="showCreateModal" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
-    <div class="bg-white rounded-lg shadow-lg pt-10 pb-16 w-[40rem] pl-10 pr-10 border border-black">
-      <div class="-mt-6 pb-4">
-        <div class="flex justify-end pr-6 pt-2">
-          <button @click="closeCreateModal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"
-              class="hover:fill-red-600">
-              <path
-                d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z">
-              </path>
-            </svg>
-          </button>
-        </div>
-        <div>
-          <h2 class="text-lg font-semibold text-center">Tambah Obat</h2>
-        </div>
-      </div>
-      <div class="border-b-2"></div>
-      <form @submit.prevent="createObat" class="max-h-[750px] overflow-y-auto">
-        <table class="w-full border border-gray-300 ">
-          <tbody>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Nama Obat</th>
-              <td>
-                <input @change="getGambarObat(newObat.nama_obat)" v-model="newObat.nama_obat" type="text"
-                  class="w-full p-2 border border-gray-300 rounded" required />
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Kode Obat</th>
-              <td>
-                <input v-model="newObat.kode_obat" type="text" class="w-full p-2 border border-gray-300 rounded"
-                  required disabled />
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Dosis</th>
-              <td>
-                <input v-model="newObat.dosis_obat" type="text" class="w-full p-2 border border-gray-300 rounded"
-                  required />
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Merk Obat</th>
-              <td>
-                <input v-model="newObat.merk_obat" type="text" class="w-full p-2 border border-gray-300 rounded"
-                  required />
-              </td>
-            </tr>
-            <tr class="py-3">
-              <th class="text-start py-3 pl-4 pr-20">Resep Dokter</th>
-              <td>
-                <select v-model="newObat.is_prescription" class="w-full py-2 pl-2 border border-gray-300 rounded">
-                  <option :value="true">Ya</option>
-                  <option :value="false">Tidak</option>
-                </select>
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Golongan Obat</th>
-              <td>
-                <input v-model="newObat.golongan_obat" type="text" class="w-full p-2 border border-gray-300 rounded"
-                  required />
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Deskripsi</th>
-              <td>
-                <textarea v-model="newObat.deskripsi" class="w-full p-2 border border-gray-300 rounded"
-                  required></textarea>
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Harga Beli</th>
-              <td>
-                <input v-model.number="newObat.harga_beli" type="number"
-                  class="w-full p-2 border border-gray-300 rounded" required />
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Harga Jual</th>
-              <td>
-                <input v-model.number="newObat.harga_jual" type="number"
-                  class="w-full p-2 border border-gray-300 rounded" required />
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Pemasok</th>
-              <td>
-                <select v-model="newObat.id_pemasok" class="w-full p-2 border border-gray-300 rounded" required>
-                  <option v-for="pemasok in pemasoks" :key="pemasok.id_pemasok" :value="pemasok.id_pemasok">
-                    {{ pemasok.nama }}
-                  </option>
-                </select>
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Tipe Obat</th>
-              <td>
-                <select v-model="newObat.id_tipe_obat" class="w-full p-2 border border-gray-300 rounded" required>
-                  <option v-for="tipe in tipeObats" :key="tipe.id_tipe_obat" :value="tipe.id_tipe_obat">
-                    {{ tipe.nama_tipe }}
-                  </option>
-                </select>
-              </td>
-            </tr>
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Tag Obat</th>
-              <td>
-                <div class="max-h-40 overflow-y-auto border border-gray-300 rounded p-2">
-                  <div v-for="tag in tagObats" :key="tag.id_tag_obat">
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" :value="tag.id_tag_obat" v-model="selectedTags" />
-                      <span>{{ tag.nama_tag }}</span>
-                    </label>
-                  </div>
-                </div>
-              </td>
-            </tr>
 
-            <tr class="py-3 border-b border-gray-300">
-              <th class="text-start py-3 pl-4 pr-20">Gambar</th>
-              <td>
-                <!-- Tombol Pilih Gambar -->
-                <button @click="showModalGambar = true" class="px-4 py-2 bg-blue-600 text-white rounded">
-                  Pilih Gambar
-                </button>
-                <div v-if="newObat.gambar_obat" class="mt-4">
-                  <p class="text-sm text-gray-600">Gambar Terpilih:</p>
-                  <img :src="getGambar(newObat.gambar_obat)" class="w-32 mt-2 rounded border" />
-                </div>
-                <!-- <select v-model="newObat.gambar_obat" class="w-full p-2 border border-gray-300 rounded" required>
-                  <option v-for="gambar in GambarObat" :key="gambar.id" :value="gambar">
-                    {{ getFullImgPath(gambar) }}
-                  </option>
-                </select> -->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="flex justify-center mt-4">
-          <button type="submit" class="px-4 py-2 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-700">
+  <div v-if="showCreateModal" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
+    <div
+      class="bg-white rounded-xl shadow-2xl w-[44rem] max-w-full p-6 relative border border-black max-h-[90vh] overflow-y-auto">
+
+      <!-- Tombol Close -->
+      <button @click="closeCreateModal" class="absolute top-4 right-4 hover:text-red-600 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Z
+                 M165.66,101.66L139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32
+                 L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z" />
+        </svg>
+      </button>
+
+      <!-- Judul -->
+      <h2 class="text-xl font-semibold text-center mb-4">Tambah Obat</h2>
+      <hr class="mb-4">
+
+      <form @submit.prevent="createObat" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Nama Obat -->
+        <div>
+          <label class="block font-medium">Nama Obat</label>
+          <input @change="getGambarObat(newObat.nama_obat)" v-model="newObat.nama_obat" type="text" class="input-form"
+            required>
+        </div>
+
+        <!-- Kode Obat -->
+        <div>
+          <label class="block font-medium">Kode Obat</label>
+          <input v-model="newObat.kode_obat" type="text" class="input-form" required disabled>
+        </div>
+
+        <!-- Dosis -->
+        <div>
+          <label class="block font-medium">Dosis</label>
+          <input v-model="newObat.dosis_obat" type="text" class="input-form" required>
+        </div>
+
+        <!-- Merk -->
+        <div>
+          <label class="block font-medium">Merk Obat</label>
+          <input v-model="newObat.merk_obat" type="text" class="input-form" required>
+        </div>
+
+        <!-- Resep -->
+        <div>
+          <label class="block font-medium">Resep Dokter</label>
+          <select v-model="newObat.is_prescription" class="input-form">
+            <option :value="true">Ya</option>
+            <option :value="false">Tidak</option>
+          </select>
+        </div>
+
+        <!-- Golongan -->
+        <div>
+          <label class="block font-medium">Golongan Obat</label>
+          <input v-model="newObat.golongan_obat" type="text" class="input-form" required>
+        </div>
+
+        <!-- Harga Beli -->
+        <div>
+          <label class="block font-medium">Harga Beli</label>
+          <input v-model.number="newObat.harga_beli" type="number" class="input-form" required>
+        </div>
+
+        <!-- Harga Jual -->
+        <div>
+          <label class="block font-medium">Harga Jual</label>
+          <input v-model.number="newObat.harga_jual" type="number" class="input-form" required>
+        </div>
+
+        <!-- Pemasok -->
+        <div>
+          <label class="block font-medium">Pemasok</label>
+          <select v-model="newObat.id_pemasok" class="input-form" required>
+            <option v-for="pemasok in pemasoks" :key="pemasok.id_pemasok" :value="pemasok.id_pemasok">{{ pemasok.nama }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Tipe Obat -->
+        <div>
+          <label class="block font-medium">Tipe Obat</label>
+          <select v-model="newObat.id_tipe_obat" class="input-form" required>
+            <option v-for="tipe in tipeObats" :key="tipe.id_tipe_obat" :value="tipe.id_tipe_obat">{{ tipe.nama_tipe }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Deskripsi (Full Width) -->
+        <div class="md:col-span-2">
+          <label class="block font-medium">Deskripsi</label>
+          <textarea v-model="newObat.deskripsi" class="input-form" rows="3" required></textarea>
+        </div>
+
+        <!-- Tag Obat (Full Width) -->
+        <div class="md:col-span-2">
+          <label class="block font-medium">Tag Obat</label>
+          <div class="max-h-40 overflow-y-auto border border-gray-300 rounded p-2">
+            <label v-for="tag in tagObats" :key="tag.id_tag_obat" class="flex items-center space-x-2">
+              <input type="checkbox" :value="tag.id_tag_obat" v-model="selectedTags" />
+              <span>{{ tag.nama_tag }}</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Gambar (Full Width) -->
+        <div class="md:col-span-2">
+          <label class="block font-medium mb-2">Gambar Obat</label>
+          <button @click="showModalGambar = true" type="button" class="px-4 py-2 bg-blue-600 text-white rounded">Pilih
+            Gambar</button>
+          <div v-if="newObat.gambar_obat" class="mt-2">
+            <p class="text-sm text-gray-600">Gambar Terpilih:</p>
+            <img :src="getGambar(newObat.gambar_obat)" class="w-32 mt-2 rounded border" />
+          </div>
+        </div>
+
+        <!-- Tombol Submit (Full Width) -->
+        <div class="md:col-span-2 flex justify-center pt-4">
+          <button type="submit" class="px-6 py-2 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-700">
             Tambah Obat
           </button>
         </div>
       </form>
     </div>
   </div>
-  <div v-if="showCreateModalexcel"
-    class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
-    <div class="bg-white rounded-lg shadow-lg pt-6 pb-8 px-8 w-[100rem]">
-      <div class="flex justify-end pr-6 pt-2">
-        <button @click="closeBatchModal">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"
-            class="hover:fill-red-600">
+
+  <div v-if="showCreateModalexcel" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto px-3 py-3">
+      <!-- Close Button -->
+      <div class="flex justify-end">
+        <button @click="closeBatchModal" class="hover:text-red-600">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
             <path
-              d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z">
-            </path>
+              d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z" />
           </svg>
         </button>
       </div>
-      <h2 class="text-lg font-semibold text-center mb-4">Import Excel Obat</h2>
 
-      <input type="file" @change="handleFileUpload" accept=".xlsx, .xls" class="mb-4" />
-      <button @click="selectDirectoryAndMatchImages" class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg">
-        Pilih Direktori Gambar
-      </button>
-      <div v-if="excelData.length > 0" class="overflow-y-auto max-h-60 border rounded-md p-2 bg-gray-50">
-        <table class="table-auto w-full text-sm">
-          <thead>
+      <!-- Title -->
+      <h2 class="text-base font-semibold text-center mb-3">Import Excel Obat</h2>
+
+      <!-- Upload Section -->
+      <div class="flex flex-col gap-3 items-center mb-4">
+        <div class="w-full max-w-sm flex flex-col gap-1">
+          <label class="text-sm font-medium">Upload Excel</label>
+          <input type="file" @change="handleFileUpload" accept=".xlsx, .xls"
+            class="w-full border border-gray-300 p-1.5 rounded text-sm" />
+        </div>
+
+        <div class="w-full max-w-sm flex flex-col gap-1">
+          <label class="text-sm font-medium">Direktori Gambar</label>
+          <button @click="selectDirectoryAndMatchImages"
+            class="w-full px-3 py-1.5 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+            Pilih Direktori
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Table -->
+      <div v-if="excelData.length" class="max-h-60 overflow-auto border rounded bg-gray-50 text-xs p-2">
+        <table class="table-auto w-full">
+          <thead class="bg-gray-200 sticky top-0">
             <tr>
-              <th class="px-4 py-2 border">No</th>
-              <th class="px-4 py-2 border">Nama Obat</th>
-              <th class="px-4 py-2 border">Kode Obat</th>
-              <th class="px-4 py-2 border">Dosis</th>
-              <th class="px-4 py-2 border">Deskripsi</th>
-              <th class="px-4 py-2 border">Tipe obat</th>
-              <th class="px-4 py-2 border">Tag Obat</th>
-              <th class="px-4 py-2 border">Golongan Obat</th>
-              <th class="px-4 py-2 border">Resep Dokter</th>
-              <th class="px-4 py-2 border">Harga Beli</th>
-              <th class="px-4 py-2 border">Harga Jual</th>
-              <th class="px-4 py-2 border">Stok Awal</th>
-              <th class="px-4 py-2 border">Margin</th>
-              <th class="px-4 py-2 border">Lokasi</th>
-              <th class="px-4 py-2 border">Tanggal Kadaluarsa</th>
-              <th class="px-4 py-2 border">Keterangan</th>
-              <th class="px-4 py-2 border">Pemasok</th>
-              <th class="px-4 py-2 border">Merk</th>
-              <th class="px-4 py-2 border">Gambar</th>
+              <th class="px-1 py-1 border">No</th>
+              <th class="px-1 py-1 border">Nama</th>
+              <th class="px-1 py-1 border">Kode</th>
+              <th class="px-1 py-1 border">Dosis</th>
+              <th class="px-1 py-1 border">Deskripsi</th>
+              <th class="px-1 py-1 border">Tipe</th>
+              <th class="px-1 py-1 border">Tag</th>
+              <th class="px-1 py-1 border">Golongan</th>
+              <th class="px-1 py-1 border">Resep</th>
+              <th class="px-1 py-1 border">Beli</th>
+              <th class="px-1 py-1 border">Jual</th>
+              <th class="px-1 py-1 border">Stok</th>
+              <th class="px-1 py-1 border">Margin</th>
+              <th class="px-1 py-1 border">Lokasi</th>
+              <th class="px-1 py-1 border">Exp</th>
+              <th class="px-1 py-1 border">Ket</th>
+              <th class="px-1 py-1 border">Pemasok</th>
+              <th class="px-1 py-1 border">Merk</th>
+              <th class="px-1 py-1 border">Gambar</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in excelData" :key="index">
-              <td class="px-4 py-2 border">{{ index + 1 }}</td>
-              <td class="px-4 py-2 border">{{ item.nama_obat }}</td>
-              <td class="px-4 py-2 border">{{ item.kode_obat }}</td>
-              <td class="px-4 py-2 border">{{ item.dosis_obat }}</td>
-              <td class="px-4 py-2 border">{{ item.deskripsi }}</td>
-              <td class="px-4 py-2 border">{{ item.nama_tipe }}</td>
-              <td class="px-4 py-2 border">{{ item.tag_obat }}</td>
-              <td class="px-4 py-2 border">{{ item.golongan_obat }}</td>
-              <td class="px-4 py-2 border">{{ item.resep_dokter }}</td>
-              <td class="px-4 py-2 border">{{ item.harga_beli }}</td>
-              <td class="px-4 py-2 border">{{ item.harga_jual }}</td>
-              <td class="px-4 py-2 border">{{ item.stok_awal }}</td>
-              <td class="px-4 py-2 border">{{ item.margin }}</td>
-              <td class="px-4 py-2 border">{{ item.lokasi }}</td>
-              <td class="px-4 py-2 border">{{ item.tanggal_kadaluwarsa }}</td>
-              <td class="px-4 py-2 border">{{ item.keterangan }}</td>
-              <td class="px-4 py-2 border">{{ item.pemasok }}</td>
-              <td class="px-4 py-2 border">{{ item.merk_obat }}</td>
-              <td class="px-4 py-2 border">
-                <img v-if="item.gambar_url" :src="item.gambar_url" alt="Gambar Obat"
-                  class="w-16 h-16 object-cover rounded-md cursor-pointer" />
-                <span v-else>File Belum Di-Upload</span>
+            <tr v-for="(item, index) in excelData" :key="index" class="hover:bg-gray-100">
+              <td class="border px-1 py-1">{{ index + 1 }}</td>
+              <td class="border px-1 py-1">{{ item.nama_obat }}</td>
+              <td class="border px-1 py-1">{{ item.kode_obat }}</td>
+              <td class="border px-1 py-1">{{ item.dosis_obat }}</td>
+              <td class="border px-1 py-1">{{ item.deskripsi }}</td>
+              <td class="border px-1 py-1">{{ item.nama_tipe }}</td>
+              <td class="border px-1 py-1">{{ item.tag_obat }}</td>
+              <td class="border px-1 py-1">{{ item.golongan_obat }}</td>
+              <td class="border px-1 py-1">{{ item.resep_dokter }}</td>
+              <td class="border px-1 py-1">{{ item.harga_beli }}</td>
+              <td class="border px-1 py-1">{{ item.harga_jual }}</td>
+              <td class="border px-1 py-1">{{ item.stok_awal }}</td>
+              <td class="border px-1 py-1">{{ item.margin }}</td>
+              <td class="border px-1 py-1">{{ item.lokasi }}</td>
+              <td class="border px-1 py-1">{{ item.tanggal_kadaluwarsa }}</td>
+              <td class="border px-1 py-1">{{ item.keterangan }}</td>
+              <td class="border px-1 py-1">{{ item.pemasok }}</td>
+              <td class="border px-1 py-1">{{ item.merk_obat }}</td>
+              <td class="border px-1 py-1">
+                <img v-if="item.gambar_url" :src="item.gambar_url" class="w-10 h-10 object-cover rounded" />
+                <span v-else class="text-gray-400 text-xs">N/A</span>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="flex justify-end mt-4">
-        <button @click="CreateObatBatch" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
+
+      <!-- Submit -->
+      <div class="flex justify-center items-center mt-2">
+        <button @click="CreateObatBatch"
+          class="px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 text-sm">
           Submit
         </button>
       </div>
     </div>
-
   </div>
+
   <!-- Modal -->
   <div v-if="showModalGambar" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-xl p-6 w-[90%] max-w-2xl relative">
@@ -515,14 +548,10 @@
           <img :src="getFullImgPath(gambar)" class="w-full h-24 object-cover" />
         </div>
       </div>
-
-      <!-- Upload Gambar -->
       <div class="mb-2">
         <label class="font-semibold">Upload Gambar Baru:</label>
         <input type="file" @change="onFileChange" accept="image/*" class="block mt-2" />
       </div>
-
-      <!-- Selected -->
       <div v-if="newObat.gambar_obat" class="mt-4">
         <p class="text-sm text-gray-600">Gambar Terpilih:</p>
         <img :src="getGambar(newObat.gambar_obat)" class="w-32 mt-2 rounded border" />
@@ -543,14 +572,16 @@ export default {
   },
   data() {
     return {
+      searchInput: '',
       currentPage: 1,
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       dataObat: [],
       GambarObat: [],
       tipeObats: [],
       imageUrls: [],
       tagObats: [],
       excelData: [],
+      allObat: [],
       pemasoks: [],
       showModal: false,
       selectedObat: null,
@@ -622,13 +653,33 @@ export default {
       } else {
         return this.getFullImgPath(gambar)
       }
-    }
-    ,
+    },
+
     selectGambar(gambar) {
       this.uploaded = false;
       this.newObat.gambar_obat = gambar;
 
     },
+    SearchData() {
+      const searchTerm = this.searchInput.toLowerCase();
+
+      if (!searchTerm) {
+        // Reset ke data awal
+        this.dataObat = [...this.allObat];
+      } else {
+        this.dataObat = this.allObat.filter((obat) => {
+          const kodeObatMatch = obat.kode_obat?.toLowerCase().includes(searchTerm);
+          const namaObatMatch = obat.nama_obat?.toLowerCase().includes(searchTerm);
+          const namaTipeMatch = obat.tipe_obat?.nama_tipe?.toLowerCase().includes(searchTerm);
+          const namaTagMatch = obat.tags?.some((tag) => tag.nama_tag.toLowerCase().includes(searchTerm));
+
+          return kodeObatMatch || namaObatMatch || namaTipeMatch || namaTagMatch;
+        });
+      }
+
+      this.currentPage = 1; // Reset ke halaman pertama setelah search
+    },
+
     cleanJSONMarkdown(raw) {
       return raw
         .replace(/^\s*```(?:json)?\s*/i, "") // hapus ```json atau ```
@@ -969,18 +1020,16 @@ export default {
     getObats() {
       Api.getObat()
         .then((res) => {
-          this.dataObat = res.data.map((obat) => {
-            return {
-              ...obat,
-            };
-          })
+          const obats = res.data.map((obat) => ({ ...obat }));
+          this.allObat = obats;
+          this.dataObat = obats;
           this.dataObat = this.dataObat.sort((a, b) => b.id_obat - a.id_obat);
-          console.log(this.dataObat);
         })
         .catch((err) => {
           console.log(err);
         });
     },
+
     prevPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -994,3 +1043,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.input-form {
+  @apply w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500;
+}
+</style>

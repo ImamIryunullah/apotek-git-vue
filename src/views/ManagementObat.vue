@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FilterObat />
+        <!-- <FilterObat /> -->
     </div>
     <div>
         <TableObatPseudo />
@@ -9,12 +9,12 @@
 
 <script>
 import TableObatPseudo from '@/components/TableObatPseudo.vue';
-import FilterObat from '@/components/FilterObat.vue';
+// import FilterObat from '@/components/FilterObat.vue';
 
 export default {
     components: {
         TableObatPseudo,
-        FilterObat
+        // FilterObat
     }
 }
 </script>

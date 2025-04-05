@@ -2,12 +2,12 @@
     <!-- Filter -->
     <div class="pb-10">
         <div class="font-Roboto tracking-wider ">
-            <div class="bg-white -mx-10 flex items-center justify-between px-20">
+            <div class="bg-white -mx-10 flex items-center justify-between px-20 py-4">
                 <div>
                     <div class="flex space-x-3 py-4 relative -left-6">
                         <div>
                             <div>
-                                <div @click="dropdownKodeObat"
+                                <!-- <div @click="dropdownKodeObat"
                                     class="bg-white border border-black rounded-lg cursor-pointer w-52">
                                     <div class="flex justify-between items-center px-4">
                                         <button class="px-2 py-2">
@@ -21,8 +21,8 @@
                                             </svg>
                                         </div>
                                     </div>
-                                </div>
-                                <div v-if="isKodeObatOpen"
+                                </div> -->
+                                <!-- <div v-if="isKodeObatOpen"
                                     class="absolute bg-white border border-black mt-2 rounded-lg shadow-lg w-52">
                                     <div class="flex flex-col divide-y divide-gray-200">
                                         <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
@@ -38,12 +38,12 @@
                                             <h1>ATU</h1>
                                         </label>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div>
                             <div>
-                                <div class="relative">
+                                <!-- <div class="relative">  
                                     <div @click="dropdownJenisObat"
                                         class="bg-white border border-black rounded-lg cursor-pointer w-52">
                                         <div class="flex justify-between items-center px-4">
@@ -76,15 +76,15 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div>
-                            <div class="bg-red-600 hover:bg-emerald-700 border border-black rounded-lg">
+                            <!-- <div class="bg-red-600 hover:bg-emerald-700 border border-black rounded-lg">
                                 <button class="px-6 py-2 font-bold text-white">
                                     <h1>Filter</h1>
                                 </button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -107,255 +107,187 @@
     </div>
 
 
-    <div class="font-Roboto">
-        <div class="grid grid-cols-4 gap-20">
-            <!-- <div v-for="obat in dataObat.filter((obats) => obats.stok.length > 0 && obats.stok[obats.stok.length -
-                1].stok_akhir > 0)" :key="obat.nama_obat"
-                class="p-4 capitalize text-white max-w-[50rem] h-[38rem] bg-emerald-600 rounded-xl border-2 border-black py-6"> -->
-            <div v-for="obat in dataObat.filter((obats) => obats.stok.length > 0)" :key="obat.nama_obat"
-                class="p-4 capitalize text-white max-w-96 h-[55rem] bg-emerald-600 rounded-xl border-2 border-black py-6 flex flex-col justify-between">
-                <div class="flex-1">
-                    <div class="px-4">
-                        <div class="border-2 border-black rounded-2xl bg-gray-100">
-                            <img :src="getFullImgPath(obat.gambar_obat)" class="w-60 max-h-44 object-cover mx-auto"
-                                ref="imageRefs" @load="checkImageSize($event, obat.nama_obat)">
+    <div class="font-Roboto px-4 py-6">
+        <!-- GRID OBAT -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div v-for="obat in dataObat.filter((obats) => obats.stok.length > 0)" :key="obat.id_obat"
+                class="bg-emerald-600 text-white rounded-2xl border border-black p-4 flex flex-col shadow-md hover:shadow-lg transition">
+                <!-- Gambar -->
+                <div class="border border-black rounded-xl bg-gray-100 p-1 mb-3">
+                    <img :src="getFullImgPath(obat.gambar_obat)" class="w-full h-28 object-cover rounded-md mx-auto"
+                        ref="imageRefs" @load="checkImageSize($event, obat.nama_obat)" />
+                </div>
+
+                <!-- Counter -->
+                <div class="flex justify-center mb-3">
+                    <div
+                        class="flex items-center space-x-2 px-3 py-1 bg-white text-black rounded-lg border border-black">
+                        <button @click="minus(obat)" class="text-lg font-bold hover:text-red-600">–</button>
+                        <input type="number"
+                            class="w-10 text-center text-base font-semibold bg-transparent focus:outline-none"
+                            v-model="obat.jumlah_checkout" @change="InputCheckout(obat)" />
+                        <button @click="plus(obat)" class="text-lg font-bold hover:text-green-600">+</button>
+                    </div>
+                </div>
+
+                <!-- Detail Obat -->
+                <div class="mb-3 space-y-1.5">
+                    <div class="space-y-1">
+                        <h1 class="text-base font-bold leading-snug truncate">{{ obat.nama_obat }}</h1>
+                        <div class="flex justify-between text-xs text-white/90">
+                            <span class="font-semibold">{{ formattedRupiah(obat.harga_jual) }}</span>
+                            <span class="italic text-white/70">{{ obat.dosis_obat }}</span>
                         </div>
                     </div>
-                    <div class="px-4 py-2 space-y-4">
-                        <div class="flex justify-between">
-                            <div class="flex space-x-2 pb-4">
-                                <div>
-                                    <h1 class="text-2xl font-bold mt-2">{{ obat.nama_obat }}</h1>
+                    <div
+                        class="flex justify-between items-center text-sm bg-white text-black px-3 py-1 rounded-lg mt-2 border border-black">
+                        <span class="font-semibold">Stok</span>
+                        <span :class="[
+                            'font-bold',
+                            obat.stok[obat.stok.length - 1].stok_akhir > 0 ? 'text-green-600' : 'text-red-600'
+                        ]">
+                            {{
+                                obat.stok[obat.stok.length - 1].stok_akhir > 0
+                                    ? obat.stok[obat.stok.length - 1].stok_akhir
+                            : 'Habis'
+                            }}
+                        </span>
+                    </div>
+                </div>
 
-                                    <h1 class="text-lg font-semibold text-white pt-2">{{
-                                        formattedRupiah(obat.harga_jual) }}
-                                    </h1>
-                                </div>
-                                <div class="mt-4">
-                                    <h1 class="text-base font-semibold">. {{ obat.dosis_obat }}</h1>
-                                </div>
-                            </div>
-                            <div>
-                                <h1 class="text-lg font-semibold mt-2">Stok : {{ obat.stok[obat.stok.length -
-                                    1].stok_akhir > 0 ? obat.stok[obat.stok.length -
-                                        1].stok_akhir : "Habis"
-                                }}
-                                </h1>
+                <!-- Toggle Detail -->
+                <button @click="obat.showMore = !obat.showMore"
+                    class="text-xs underline text-white hover:text-gray-200 mt-1 self-start">
+                    {{ obat.showMore ? 'Lebih sedikit' : 'Selengkapnya' }}
+                </button>
 
+                <div v-show="obat.showMore"
+                    class="text-sm mt-3 space-y-2 border-t border-white pt-2 transition-all duration-300">
+                    <div>
+                        <p class="font-semibold text-sm">{{ obat.merk_obat }}</p>
+                        <p class="text-xs">{{ obat.deskripsi }}</p>
+                    </div>
+                    <div class="space-y-1">
+                        <div>
+                            <h1 class="font-semibold text-xs">Tag:</h1>
+                            <div class="flex flex-wrap gap-1">
+                                <div v-for="tag in obat.tags" :key="tag.id_tag_obat"
+                                    class="bg-white text-black border border-black px-2 py-0.5 rounded text-[10px]">
+                                    {{ tag.nama_tag }}
+                                </div>
                             </div>
                         </div>
                         <div>
-                            <h1 class=" text-white text-1xl font-bold">{{ obat.merk_obat }}</h1>
-                        </div>
-                        <div>
-                            <h1 class="text-base text-white">{{ obat.deskripsi }}</h1>
-                        </div>
-                        <div class="bg-black h-0.5"></div>
-                        <div class="space-y-4">
-                            <!-- Tag -->
-                            <div>
-                                <div class="font-semibold mb-1">
-                                    <h1>Tag:</h1>
-                                </div>
-                                <div class="flex flex-wrap gap-2 break-words">
-                                    <div v-for="tag in obat.tags" :key="tag.id_tag_obat"
-                                        class="bg-white text-black border border-black px-4 py-2 rounded-2xl text-sm">
-                                        {{ tag.nama_tag }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Tipe Obat -->
-                            <div>
-                                <div class="font-semibold mb-1">
-                                    <h1>Tipe Obat:</h1>
-                                </div>
-                                <div
-                                    class="bg-white text-black border border-black px-4 py-2 rounded-2xl text-sm inline-block">
-                                    {{ obat.tipe_obat.nama_tipe }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between pt-4 py-20 m-10">
-                            <div class="flex space-x-6 px-4 py-2 bg-white border rounded-xl border-black h-[4rem]">
-                                <button @click="minus(obat)" class="pl-2 pt-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24"
-                                        stroke-width="2.5" stroke="#000000" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
-                                    </svg>
-                                </button>
-                                <div class="bg-che text-white text-lg rounded-xl">
-                                    <input type="number"
-                                        class="bg-che px-4 py-2 font-s mibold text-white rounded-xl w-20 text-center no-spinner"
-                                        v-model="obat.jumlah_checkout"
-                                        @input="console.log('Updated Value:', obat.jumlah_checkout)"
-                                        @change="InputCheckout(obat)">
-                                </div>
-                                <button @click="plus(obat)" class="pl-2 pt-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24"
-                                        stroke-width="2.5" stroke="#000000" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M12 4.5v15m7.5-7.5h-15" />
-                                    </svg>
-                                </button>
+                            <h1 class="font-semibold text-xs">Tipe Obat:</h1>
+                            <div
+                                class="bg-white text-black border border-black px-2 py-0.5 rounded-full text-xs inline-block">
+                                {{ obat.tipe_obat.nama_tipe }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div v-if="showModal"
-                    class="fixed inset-0 bg-gray-700 bg-opacity-10 flex justify-center items-center z-50">
-                    <div class="bg-white rounded-lg shadow-lg pl-10 pt-10 pb-20 w-[60rem]">
-                        <div class="flex justify-between px-6">
-                            <h2 class="text-lg font-semibold text-black">Detail Transaksi</h2>
-                            <button @click="closeModal" class="hover:fill-red-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
-                                    viewBox="0 0 256 256">
-                                    <path
-                                        d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z">
-                                    </path>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="border-b-2 my-4"></div>
-                        <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
-                            <table v-for="(listCheckout, index) in SelectedObat" :key="listCheckout.id_obat"
-                                class="text-black w-full px-6">
-                                <div class="border-b-2">
-                                    <h1> List Checkout Obat {{ index + 1 }}</h1>
-                                </div>
-                                <tbody>
-                                    <tr class="border-b">
-                                        <th class="text-start py-3 pr-10">Kode Obat</th>
-                                        <td>{{ listCheckout.kode_obat }}</td>
-                                    </tr>
-                                    <tr class="border-b">
-                                        <th class="text-start py-3 pr-10">Nama Obat</th>
-                                        <td>{{ listCheckout.nama_obat }}</td>
-                                    </tr>
-                                    <tr class="border-b">
-                                        <th class="text-start py-3 pr-10">Dosis</th>
-                                        <td>{{ listCheckout.dosis_obat }}</td>
-                                    </tr>
-                                    <tr class="border-b">
-                                        <th class="text-start py-3 pr-10">Tag</th>
-                                        <td>
-                                            <div class="flex flex-wrap">
-                                                <span v-for="tag in listCheckout.tags" :key="tag.id_tag_obat"
-                                                    class="bg-gray-200 text-black px-2 py-1 rounded-lg m-1">
-                                                    {{ tag.nama_tag }}
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b">
-                                        <th class="text-start py-3 pr-10">Harga Obat</th>
-                                        <td>{{ formattedRupiah(listCheckout.harga_jual) }}</td>
-                                    </tr>
-                                    <tr class="border-b">
-                                        <th class="text-start py-3 pr-10">Jumlah</th>
-                                        <td>{{ listCheckout.jumlah_checkout }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-start py-3 pr-10">Total Harga</th>
-                                        <td>{{ formattedRupiah(listCheckout.jumlah_checkout * listCheckout.harga_jual)
-                                        }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="border border-b-2"></div>
-                            <div class="border border-b-2"></div>
-                            <div class="text-black">
-                                <label class="text-start py-1 pr-10">Diskon (%)</label>
-                                <input class=" text-start py-1 pr-10" type="number" v-model="diskonPersen">
-                            </div>
-                            <div class="border border-b-1"></div>
-                            <div class="text-black">
-                                <label class="text-start py-1 pr-10">Total Harga {{ hargaTotals }}</label>
-                                <label class="text-start py-1 pr-10">Diskon Harga {{ diskonJumlah }}</label>
-                                <label class="text-start py-1 pr-10">Harga Setelah Diskon {{ hargaSetelahDiskon
-                                }}</label>
-                            </div>
-                            <div class="border border-b-1"></div>
-                            <div v-if="selectedPelanggan" class="border-b-2 text-black">
-                                <h1> Data Pelanggan</h1>
-                                <div class="">
-                                    <label for=""> Nama : {{ selectedPelanggan.nama }} </label>
-                                    <label for=""> Alamat : {{ selectedPelanggan.alamat }} </label>
-                                    <label for=""> No Hp : {{ selectedPelanggan.telepon }} </label>
-                                    <label for=""> Email : {{ selectedPelanggan.email }} </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-center mt-10">
-                            <button @click="postTransaksi"
-                                class="px-6 py-3 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-700">
-                                Buat Transaksi
-                            </button>
-                        </div>
+            </div>
+        </div>
+        <!-- MODAL CHECKOUT -->
+        <div v-if="showModal" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
+            <div class="bg-white rounded-lg shadow-lg p-6 w-[60rem] max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-black">Detail Transaksi</h2>
+                    <button @click="closeModal">❌</button>
+                </div>
+
+                <div class="divide-y divide-gray-300 space-y-4">
+                    <div v-for="(listCheckout, index) in SelectedObat" :key="listCheckout.id_obat" class="space-y-2">
+                        <h3 class="text-black font-bold">Checkout {{ index + 1 }}</h3>
+                        <p><strong>Nama:</strong> {{ listCheckout.nama_obat }}</p>
+                        <p><strong>Dosis:</strong> {{ listCheckout.dosis_obat }}</p>
+                        <p><strong>Jumlah:</strong> {{ listCheckout.jumlah_checkout }}</p>
+                        <p><strong>Total Harga:</strong> {{ formattedRupiah(listCheckout.jumlah_checkout *
+                            listCheckout.harga_jual) }}</p>
                     </div>
+
+                    <div class="text-black pt-4">
+                        <label>Diskon (%)</label>
+                        <input type="number" class="border p-1 ml-2" v-model="diskonPersen" />
+                        <p>Total Harga: {{ formattedRupiah(hargaTotals) }}</p>
+                        <p>Diskon: {{ formattedRupiah(diskonJumlah) }}</p>
+                        <p>Setelah Diskon: {{ formattedRupiah(hargaSetelahDiskon) }}</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-6">
+                    <button @click="postTransaksi"
+                        class="px-6 py-3 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-700">
+                        Buat Transaksi
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <div>
         <!-- Floating Checkout Button -->
-        <div class="fixed bottom-20 right-5">
-            <div class="flex justify-center">
+        <div class="fixed bottom-6 right-6 z-50">
+            <button @click="showDetail(obatCheckout)"
+                class="flex flex-col items-center justify-center gap-2 bg-white hover:bg-emerald-700 hover:text-white text-center font-bold px-6 py-4 rounded-xl shadow-lg border border-black transition duration-300 ease-in-out">
+                <!-- Icon Keranjang -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#8c8200" viewBox="0 0 24 24" stroke-width="1.0"
+                    stroke="#8c8200" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                </svg>
 
-                <button @click="showDetail(obatCheckout)"
-                    class="bg-white hover:bg-emerald-700 hover:text-white font-bold px-10 py-5 rounded-lg shadow-lg border border-black">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#8c8200" viewBox="0 0 24 24" stroke-width="1.0"
-                        stroke="#8c8200" class="size-10">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                    </svg>
-                    <div v-if="selectedPelanggan !== null">
-                        <label for="">Pelanggan : {{ selectedPelanggan.nama }}</label>
-                    </div>
-                    <h1>Checkout</h1>
-                </button>
+                <!-- Nama Pelanggan (jika ada) -->
+                <div v-if="selectedPelanggan !== null" class="text-xs font-medium text-gray-800 dark:text-white">
+                    <span>Pelanggan:</span> <span class="capitalize">{{ selectedPelanggan.nama }}</span>
+                </div>
 
-            </div>
-
+                <!-- Teks Checkout -->
+                <h1 class="text-base">Checkout</h1>
+            </button>
         </div>
+
     </div>
+
     <div v-if="showModalPelanggan"
         class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-            <h2 class="text-lg font-bold mb-4">Pilih Opsi</h2>
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative">
 
-            <div class="flex justify-around">
+            <button @click="closeModal"
+                class="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-all duration-200 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2 class="text-lg font-bold mb-4 text-center">Pilih Opsi</h2>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4">
                 <button @click="modalType = 'tambah', showModals = true"
-                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                    Pelanggan baru
+                    class="px-5 py-2.5 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-all duration-200 w-52 text-center flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Pelanggan Baru
                 </button>
                 <button @click="modalType = 'pilih', showModals = true"
-                    class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                    class="px-5 py-2.5 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition-all duration-200 w-52 text-center flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-users"></i>
                     Pelanggan Lama
                 </button>
             </div>
-
             <div v-if="modalType === 'tambah' && showModals" class="mt-4">
                 <h3 class="text-md font-semibold mb-2">Tambah Pelanggan</h3>
-                <label for="">Nama : </label>
+                <label>Nama :</label>
                 <input v-model="formPelanggan.nama" type="text" placeholder="Nama"
                     class="w-full px-3 py-2 border rounded mb-2" />
-                <label for="">Email : </label>
+                <label>Email :</label>
                 <input v-model="formPelanggan.email" type="email" placeholder="Email"
                     class="w-full px-3 py-2 border rounded mb-2" />
-                <label for="">No Telpon : </label>
+                <label>No Telpon :</label>
                 <input v-model="formPelanggan.telepon" type="tel" placeholder="No Telpon"
                     class="w-full px-3 py-2 border rounded mb-2" />
-                <label for="">Alamat : </label>
+                <label>Alamat :</label>
                 <input v-model="formPelanggan.alamat" type="text" placeholder="Alamat"
                     class="w-full px-3 py-2 border rounded mb-2" />
                 <button @click="tambahPelanggan" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                     Simpan
                 </button>
             </div>
-
             <div v-if="modalType === 'pilih' && showModals" class="mt-4">
                 <h3 class="text-md font-semibold mb-2">Pilih Pelanggan</h3>
                 <div class="max-h-60 overflow-y-auto border rounded-lg">
@@ -387,11 +319,6 @@
                 </div>
             </div>
 
-            <div class="text-right mt-4">
-                <button @click="closeModal" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-                    Tutup
-                </button>
-            </div>
         </div>
     </div>
 

@@ -4,8 +4,20 @@
         <div class="bg-white -mx-10 flex items-center justify-between px-20">
             <div>
                 <div class="flex space-x-4 py-6 relative -left-6">
-                    <div>
+                    <div class="flex space-x-10">
                         <div>
+                            <button @click="openModal"
+                                class="px-4 bg-emerald-600 border border-black rounded-lg text-white hover:bg-emerald-700 py-2 transition duration-300 font-semibold">
+                                Tambah Stok Obat Baru
+                            </button>
+                        </div>
+                        <button @click="openModalUpdatestoks"
+                            class="px-4 bg-emerald-600 border border-black rounded-lg text-white hover:bg-emerald-700 py-2 transition duration-300 font-semibold">
+                            Tambah Stok
+                        </button>
+                    </div>
+                    <div>
+                        <!-- <div>
                             <div @click="dropdownKodeObat"
                                 class="bg-white border border-black rounded-lg cursor-pointer w-52">
                                 <div class="flex justify-between items-center px-4">
@@ -38,11 +50,11 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div>
                         <div>
-                            <div class="relative">
+                            <!-- <div class="relative">
                                 <div @click="dropdownJenisObat"
                                     class="bg-white border border-black rounded-lg cursor-pointer w-52">
                                     <div class="flex justify-between items-center px-4">
@@ -75,16 +87,16 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
-                    <div>
+                    <!-- <div>
                         <div class="bg-emerald-600 hover:bg-emerald-700 border border-black rounded-lg">
                             <button class="px-6 py-2 font-bold text-white">
                                 <h1>Filter</h1>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="flex justify-end space-x-6">
@@ -103,18 +115,7 @@
     </div>
     <div class="font-Roboto tracking-wider -mx-2">
         <div class="px-6 pt-6 min-h-screen">
-            <div class="flex space-x-10">
-                <div>
-                    <button @click="openModal"
-                        class="px-4 bg-emerald-600 border border-black rounded-lg text-white hover:bg-emerald-700 py-2 transition duration-300 font-semibold">
-                        Tambah Stok Obat Baru
-                    </button>
-                </div>
-                <button @click="openModalUpdatestoks"
-                    class="px-4 bg-emerald-600 border border-black rounded-lg text-white hover:bg-emerald-700 py-2 transition duration-300 font-semibold">
-                    Tambah Stok
-                </button>
-            </div>
+
             <div class="overflow-x-auto mt-4">
                 <div></div>
                 <table class="min-w-full bg-white border border-gray-200 shadow-md text-base rounded-lg">
@@ -155,7 +156,7 @@
                             </td>
                             <td class="px-4 py-6 border-b border-gray-300">{{ stok.keterangan }}</td>
                             <td class="px-4 py-6 border-b border-gray-300 flex items-center space-x-4">
-                                <button>
+                                <!-- <button>
                                     <div class="p-2 rounded hover:bg-gray-200 cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -163,7 +164,7 @@
                                                 d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                         </svg>
                                     </div>
-                                </button>
+                                </button> -->
                                 <button @click="deleteStok(stok.id_stok)" class="px-4 transition duration-300">
                                     <div class="p-2 rounded hover:bg-gray-200 cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

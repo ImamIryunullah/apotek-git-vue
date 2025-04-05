@@ -10,76 +10,106 @@
 
         <!-- Tabel Pemasok -->
         <div class="p-4">
-            <table class="min-w-full border border-gray-200 bg-white">
-                <thead class="bg-white border border-black">
-                    <tr>
-                        <th class="text-left px-4 py-2 border">ID</th>
-                        <th class="text-left px-4 py-2 border">Nama</th>
-                        <th class="text-left px-4 py-2 border">Alamat</th>
-                        <th class="text-left px-4 py-2 border">Telepon</th>
-                        <th class="text-left px-4 py-2 border">Email</th>
-                        <th class="text-left px-4 py-2 border">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="pemasok in pemasoks" :key="pemasok.id" class="hover:bg-gray-100">
-                        <td class="px-4 py-2 border">{{ pemasok.id_pemasok }}</td>
-                        <td class=" px-4 py-2 border">{{ pemasok.nama }}</td>
-                        <td class="px-4 py-2 border">{{ pemasok.alamat }}</td>
-                        <td class="px-4 py-2 border">{{ pemasok.telepon }}</td>
-                        <td class="px-4 py-2 border">{{ pemasok.email }}</td>
-
-                        <td class="px-4 py-2 border flex space-x-2">
-                            <button @click="openModalshow(pemasok)"
-                                class="px-2 py-1 bg-emerald-500 text-white rounded hover:bg-blue-600">
-                                Tampilkan
-                            </button>
-                            <button @click="openModalEdit(pemasok)"
-                                class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
-                                Edit
-                            </button>
-                            <button @click="deletePemasok(pemasok.id_pemasok)"
-                                class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
-                                Hapus
-                            </button>
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="overflow-x-auto rounded-lg shadow">
+                <table class="min-w-full text-sm text-left text-gray-700 bg-white border border-gray-200">
+                    <thead class="bg-emerald-600 text-white">
+                        <tr>
+                            <th class="px-4 py-3 border">ID</th>
+                            <th class="px-4 py-3 border">Nama</th>
+                            <th class="px-4 py-3 border">Alamat</th>
+                            <th class="px-4 py-3 border">Telepon</th>
+                            <th class="px-4 py-3 border">Email</th>
+                            <th class="px-4 py-3 border text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="pemasok in pemasoks" :key="pemasok.id" class="hover:bg-gray-100 border-t">
+                            <td class="px-4 py-2 border">{{ pemasok.id_pemasok }}</td>
+                            <td class="px-4 py-2 border">{{ pemasok.nama }}</td>
+                            <td class="px-4 py-2 border">{{ pemasok.alamat }}</td>
+                            <td class="px-4 py-2 border">{{ pemasok.telepon }}</td>
+                            <td class="px-4 py-2 border">{{ pemasok.email }}</td>
+                            <td class="px-4 py-2 border text-center">
+                                <div class="flex justify-center space-x-2">
+                                    <button @click="openModalshow(pemasok)"
+                                        class="px-2 py-1 bg-emerald-500 text-white rounded hover:bg-emerald-600 flex items-center gap-1 text-xs">
+                                        <i class="fa-solid fa-eye"></i>
+                                        Tampil
+                                    </button>
+                                    <button @click="openModalEdit(pemasok)"
+                                        class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center gap-1 text-xs">
+                                        <i class="fa-solid fa-pen"></i>
+                                        Edit
+                                    </button>
+                                    <button @click="deletePemasok(pemasok.id_pemasok)"
+                                        class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 flex items-center gap-1 text-xs">
+                                        <i class="fa-solid fa-trash"></i>
+                                        Hapus
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- Modal Tambah/Edit -->
-        <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                <h2 class="text-lg font-bold mb-4">{{ isEditing ? 'Edit' : 'Tambah' }} Pemasok</h2>
-                <form @submit.prevent="isEditing ? updatePemasok() : createPemasok()">
-                    <div class="mb-4">
-                        <label for="nama" class="block text-sm font-medium">Nama:</label>
+
+
+        <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
+                <!-- Close Button -->
+                <button @click="closeModal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+                    title="Tutup">
+                    ✕
+                </button>
+
+                <!-- Judul Modal -->
+                <h2 class="text-xl font-semibold mb-6 text-center">
+                    {{ isEditing ? 'Edit' : 'Tambah' }} Pemasok
+                </h2>
+
+                <!-- Form -->
+                <form @submit.prevent="isEditing ? updatePemasok() : createPemasok()" class="space-y-4">
+                    <div>
+                        <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
                         <input v-model="form.nama" type="text" id="nama"
-                            class="w-full px-3 py-2 border rounded focus:ring focus:ring-blue-200" required />
+                            class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition outline-none"
+                            required />
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium">Alamat:</label>
+
+                    <div>
+                        <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
                         <input type="text" id="alamat" v-model="form.alamat"
-                            class="w-full px-3 py-2 border rounded focus:ring focus:ring-blue-200" required>
+                            class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition outline-none"
+                            required />
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium">Telpon:</label>
-                        <input type="text" id="alamat" v-model="form.telepon"
-                            class="w-full px-3 py-2 border rounded focus:ring focus:ring-blue-200" required>
+
+                    <div>
+                        <label for="telepon" class="block text-sm font-medium text-gray-700">Telpon</label>
+                        <input type="text" id="telepon" v-model="form.telepon"
+                            class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition outline-none"
+                            required />
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium">Email:</label>
-                        <input type="text" id="alamat" v-model="form.email"
-                            class="w-full px-3 py-2 border rounded focus:ring focus:ring-blue-200" required>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="email" v-model="form.email"
+                            class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition outline-none"
+                            required />
                     </div>
-                    <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700">
-                        Simpan
-                    </button>
+
+                    <!-- Tombol Simpan -->
+                    <div class="pt-2">
+                        <button type="submit"
+                            class="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition">
+                            Simpan
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
+
 
         <!-- Modal Show Data -->
         <div v-if="isModalShow" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">

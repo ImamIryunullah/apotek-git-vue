@@ -13,10 +13,10 @@
                         class="px-4 bg-emerald-600 border border-black rounded-lg text-white hover:bg-emerald-700 h-[2.6rem]">
                         Filter
                     </button>
-                    <button @click="resetFilter"
+                    <!-- <button @click="resetFilter"
                         class="px-4 bg-gray-500 border border-black rounded-lg text-white hover:bg-gray-600 ml-2 h-[2.6rem]">
                         Reset
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
             <table class="min-w-full bg-white border border-gray-200 shadow-md text-base rounded-lg">
                 <thead>
                     <tr class="bg-gray-200 text-left">
-                        <th class="pl-20 py-3 border-b border-gray-300">ID Transaksi</th>
+                        <th class="pl-20 py-3 border-b border-gray-300">No</th>
                         <th class="px-4 py-3 border-b border-gray-300">Kode</th>
                         <th class="px-4 py-3 border-b border-gray-300">Detail</th>
                         <th class="px-4 py-3 border-b border-gray-300">Tanggal</th>
@@ -120,11 +120,11 @@
                     <form @submit.prevent="updateStatus()">
                         <div class="mb-4">
                             <label class=" block text-sm font-medium">Nama Obat :{{ selectedDetail.id_obat }}</label>
-                            <!-- <label class="block text-sm font-medium">{{ listCheckout.id_obat }}</label> -->
+
                             <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
                                 <table v-for="(listCheckout) in selectedDetail.obats" :key="listCheckout.id_obat"
                                     class="flex justify-center w-full">
-                                    <!-- <div class="pb- 20">{{ index }}</div> -->
+
                                     <tbody>
                                         <tr class="py-3 border-b border-gray-300">
                                             <th scope=" row"
@@ -190,7 +190,7 @@
         </div>
 
         <div v-if="showModal" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
-            <div class="bg-white rounded-lg shadow-lg pt-10 pb-16 w-[70rem]">
+            <div class="bg-white rounded-lg shadow-lg pt-5 pb-10 w-[40rem]">
                 <div class="flex justify-end pr-6 pt-2">
                     <button @click="closeModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
@@ -201,68 +201,58 @@
                         </svg>
                     </button>
                 </div>
-                <div v-if="detailsObat">
-                    <div class="-mt-6 pb-4">
-                        <div>
-                            <h2 class="text-lg font-semibold text-center">Detail Obat</h2>
-                        </div>
-                    </div>
-                    <div class="border-b-2">
-                    </div>
-                    <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
-                        <table v-for="(listCheckout) in selectedDetail.obats" :key="listCheckout.id_obat"
-                            class="flex justify-center w-full">
-                            <!-- <div class="pb- 20">{{ index }}</div> -->
-                            <tbody>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope=" row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Kode
-                                        Obat
-                                    </th>
-                                    <td>{{ listCheckout.obat.kode_obat }}</td>
-                                </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Nama
-                                        Obat
-                                    </th>
-                                    <td>{{ listCheckout.obat.nama_obat }}</td>
-                                </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Dosis
-                                    </th>
-                                    <td>{{ listCheckout.obat.dosis_obat }}</td>
-                                </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Tag</th>
-                                    <td>
-                                        <div class="flex flex-wrap">
-                                            <span v-for="(tag, index) in listCheckout.obat.tags" :key="index"
-                                                class="bg-gray-200 text-black px-2 py-1 rounded-lg m-1">
-                                                {{ tag.nama_tag }}
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>
+                <div v-if="detailsObat" class="space-y-4">
 
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Harga
-                                        Obat
-                                    </th>
-                                    <td>{{ formattedRupiah(listCheckout.obat.harga_jual) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div v-if="selectedDetail.bukti_pembayaran">
-                            <h1>Bukti Transaksi</h1>
-                            <img :src="getFullImage(selectedDetail.bukti_pembayaran)"
-                                class="w-60 max-h-44 object-cover mx-auto" ref="imageRefs"
-                                @load="checkImageSize($event, selectedDetail.id_transaksi)">
-                        </div>
-                        <div v-else>
-                            <h1>Belum ada Bukti Transaksi</h1>
+                    <div class="text-center">
+                        <h2 class="text-lg font-semibold">Detail Obat</h2>
+                        <div class="border-b-2 border-gray-300 mt-2"></div>
+                    </div>
+
+
+                    <div class="overflow-y-auto max-h-[400px] space-y-6">
+                        <div v-for="(listCheckout) in selectedDetail.obats" :key="listCheckout.id_obat"
+                            class="bg-gray-50 rounded-lg shadow p-4 w-full max-w-3xl mx-auto space-y-2">
+                            <div class="flex justify-between">
+                                <span class="font-medium text-sm text-gray-600">Kode Obat</span>
+                                <span class="text-sm">{{ listCheckout.obat.kode_obat }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-medium text-sm text-gray-600">Nama Obat</span>
+                                <span class="text-sm">{{ listCheckout.obat.nama_obat }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-medium text-sm text-gray-600">Dosis</span>
+                                <span class="text-sm">{{ listCheckout.obat.dosis_obat }}</span>
+                            </div>
+                            <div>
+                                <span class="font-medium text-sm text-gray-600">Tag</span>
+                                <div class="flex flex-wrap mt-1">
+                                    <span v-for="(tag, index) in listCheckout.obat.tags" :key="index"
+                                        class="bg-gray-200 text-black px-2 py-1 rounded-full text-xs mr-1 mb-1">
+                                        {{ tag.nama_tag }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-medium text-sm text-gray-600">Harga Obat</span>
+                                <span class="text-sm">{{ formattedRupiah(listCheckout.obat.harga_jual) }}</span>
+                            </div>
                         </div>
 
+                        <div class="text-center space-y-2">
+                            <h3 class="font-medium text-sm">Bukti Transaksi</h3>
+                            <div v-if="selectedDetail.bukti_pembayaran">
+                                <img :src="getFullImage(selectedDetail.bukti_pembayaran)"
+                                    class="w-60 max-h-44 object-cover mx-auto rounded border shadow" ref="imageRefs"
+                                    @load="checkImageSize($event, selectedDetail.id_transaksi)" />
+                            </div>
+                            <div v-else class="text-sm text-gray-500">
+                                Belum ada Bukti Transaksi
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -411,10 +401,10 @@ export default {
             });
             this.currentPage = 1;
         },
-        resetFilter() {
-            this.filterDate = "";
-            this.filteredTransaksi = this.transaksis;
-        },
+        // resetFilter() {
+        //     this.filterDate = "";
+        //     this.filteredTransaksi = this.transaksis;
+        // },
         checkImageSize(event, nama) {
             const image = event.target;
             const maxWidth = 250;

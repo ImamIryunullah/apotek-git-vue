@@ -1,77 +1,82 @@
 <template>
-    <div class="flex justify-center items-center min-h-screen bg-gray-200">
-        <div class="w-96 p-6 bg-white rounded-lg shadow-md">
-            <h2 class="text-2xl font-bold text-center mb-6">Sign Up</h2>
-            <form @submit.prevent="register">
-                <div class="mb-4">
-                    <label for="fullname" class="block text-sm font-medium text-gray-700">Full Name</label>
-                    <input type="text" id="fullname" v-model="form.full_name"
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter your full name" required />
-                </div>
+<div class="flex justify-center items-center min-h-screen bg-gray-200 pt-16">
+  <div class="w-full max-w-4xl p-8 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Daftar Akun</h2>
 
-                <div class="mb-4">
-                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                    <input type="text" id="username" v-model="form.username"
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter your username" required />
-                </div>
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700">email</label>
-                    <input type="text" id="email" v-model="form.email"
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter your email" required />
-                </div>
+    <form @submit.prevent="register" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label for="fullname" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+        <input type="text" id="fullname" v-model="form.full_name"
+          class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Masukkan nama lengkap Anda" required />
+      </div>
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nama Pengguna</label>
+        <input type="text" id="username" v-model="form.username"
+          class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Masukkan nama pengguna Anda" required />
+      </div>
 
-                <div class="mb-4">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" id="password" v-model="form.password"
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter your password" required />
-                </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input type="email" id="email" v-model="form.email"
+          class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Masukkan email Anda" required />
+      </div>
 
-                <div class="mb-4">
-                    <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                    <select name="role" id="role" v-model="form.role"
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                        <option value="apoteker">Apoteker
-                        </option>
-                        <option value="kasir">Kasir</option>
-                    </select>
-                    <!-- <input type="text" id="role" v-model="form.role"
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter your role" required /> -->
-                </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi</label>
+        <input type="password" id="password" v-model="form.password"
+          class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Masukkan kata sandi Anda" required />
+      </div>
 
-                <div class="mb-4">
-                    <label for="telpon" class="block text-sm font-medium text-gray-700">Telpon</label>
-                    <input type="tel" id="telpon" v-model="form.telpon"
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter your phone number" required />
-                </div>
+      <div>
+        <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Peran</label>
+        <select id="role" v-model="form.role"
+          class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+          <option value="apoteker">Apoteker</option>
+          <option value="kasir">Kasir</option>
+        </select>
+      </div>
 
-                <div class="mb-4">
-                    <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
-                    <textarea id="alamat" v-model="form.alamat"
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter your address" required></textarea>
-                </div>
+      <div>
+        <label for="telpon" class="block text-sm font-medium text-gray-700 mb-1">Telepon</label>
+        <input type="tel" id="telpon" v-model="form.telpon"
+          class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Masukkan nomor telepon Anda" required />
+      </div>
 
-                <div v-if="error" class="mb-4 text-red-600 text-sm">{{ error }}</div>
+      <div class="md:col-span-2">
+        <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
+        <textarea id="alamat" v-model="form.alamat" rows="3"
+          class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Masukkan alamat Anda" required></textarea>
+      </div>
 
-                <button type="submit"
-                    class="w-full bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700">
-                    Sign Up
-                </button>
-                <p class="text-sm text-center mt-4">
-                    sudah Memiliki Akun?
-                    <router-link to="/login" class="text-emerald-600 hover:underline">
-                        Masuk Sekarang
-                    </router-link>
-                </p>
-            </form>
+      <div class="md:col-span-2" v-if="error">
+        <p class="text-sm text-red-600">{{ error }}</p>
+      </div>
+
+      <div class="md:col-span-2">
+        <div class="flex items-center justify-center">
+          <button type="submit"
+            class="w-1/2 bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-200">
+            Daftar
+          </button>
         </div>
-    </div>
+        <p class="text-sm text-center mt-4 text-gray-600">
+          Sudah memiliki akun?
+          <router-link to="/login" class="text-emerald-600 font-medium hover:underline">
+            Masuk sekarang
+          </router-link>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 </template>
 
 <script>
