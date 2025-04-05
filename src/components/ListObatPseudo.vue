@@ -5,87 +5,7 @@
             <div class="bg-white -mx-10 flex items-center justify-between px-20 py-4">
                 <div>
                     <div class="flex space-x-3 py-4 relative -left-6">
-                        <div>
-                            <div>
-                                <!-- <div @click="dropdownKodeObat"
-                                    class="bg-white border border-black rounded-lg cursor-pointer w-52">
-                                    <div class="flex justify-between items-center px-4">
-                                        <button class="px-2 py-2">
-                                            <h1>Jumlah Stok</h1>
-                                        </button>
-                                        <div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div v-if="isKodeObatOpen"
-                                    class="absolute bg-white border border-black mt-2 rounded-lg shadow-lg w-52">
-                                    <div class="flex flex-col divide-y divide-gray-200">
-                                        <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
-                                            <input type="checkbox">
-                                            <h1>ADM</h1>
-                                        </label>
-                                        <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
-                                            <input type="checkbox">
-                                            <h1>ACU</h1>
-                                        </label>
-                                        <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
-                                            <input type="checkbox">
-                                            <h1>ATU</h1>
-                                        </label>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <!-- <div class="relative">  
-                                    <div @click="dropdownJenisObat"
-                                        class="bg-white border border-black rounded-lg cursor-pointer w-52">
-                                        <div class="flex justify-between items-center px-4">
-                                            <button class="px-2 py-2">
-                                                <h1>Tipe Transaksi</h1>
-                                            </button>
-                                            <div>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div v-if="isJenisObatOpen"
-                                        class="absolute bg-white border border-black mt-2 rounded-lg shadow-lg w-52">
-                                        <div class="flex flex-col divide-y divide-gray-200">
-                                            <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
-                                                <input type="checkbox">
-                                                <h1>Tablet</h1>
-                                            </label>
-                                            <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
-                                                <input type="checkbox">
-                                                <h1>Tablet - Generik</h1>
-                                            </label>
-                                            <label class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex space-x-2">
-                                                <input type="checkbox">
-                                                <h1>Sirup</h1>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </div>
-                        <div>
-                            <!-- <div class="bg-red-600 hover:bg-emerald-700 border border-black rounded-lg">
-                                <button class="px-6 py-2 font-bold text-white">
-                                    <h1>Filter</h1>
-                                </button>
-                            </div> -->
-                        </div>
+                
                     </div>
                 </div>
 
@@ -107,19 +27,42 @@
     </div>
 
 
-    <div class="font-Roboto px-4 py-6">
+    <div class="font-Roboto px-4">
         <!-- GRID OBAT -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             <div v-for="obat in dataObat.filter((obats) => obats.stok.length > 0)" :key="obat.id_obat"
                 class="bg-emerald-600 text-white rounded-2xl border border-black p-4 flex flex-col shadow-md hover:shadow-lg transition">
                 <!-- Gambar -->
                 <div class="border border-black rounded-xl bg-gray-100 p-1 mb-3">
-                    <img :src="getFullImgPath(obat.gambar_obat)" class="w-full h-28 object-cover rounded-md mx-auto"
+                    <img :src="getFullImgPath(obat.gambar_obat)" class="w-full max-h-44 object-cover rounded-md mx-auto"
                         ref="imageRefs" @load="checkImageSize($event, obat.nama_obat)" />
                 </div>
 
-                <!-- Counter -->
-                <div class="flex justify-center mb-3">
+                <!-- Detail Obat -->
+                <div class="mb-3 space-y-1.5 px-1">
+                    <div class="space-y-1">
+                        <div class="flex  justify-between">
+                            <h1 class="text-xl tracking-wide font-medium leading-snug truncate">{{ obat.nama_obat }}</h1>
+                            <h1 class="italic text-white/70">{{ obat.dosis_obat }}</h1>
+                        </div>
+                    </div>
+                    <div
+                    class="flex justify-between items-center text-sm text-white rounded-lg">
+                    <div class="flex justify-between text-base text-white">
+                        <span class="font-medium">{{ formattedRupiah(obat.harga_jual) }} /Pcs</span>
+                    </div>
+                        <h1 :class="[
+                            'font-bold',
+                            obat.stok[obat.stok.length - 1].stok_akhir > 0 ? 'text-white' : 'text-red-600'
+                        ]">
+                            {{
+                                obat.stok[obat.stok.length - 1].stok_akhir > 0
+                                    ? obat.stok[obat.stok.length - 1].stok_akhir
+                            : 'Habis'
+                            }} Pcs
+                        </h1>
+                    </div>
+                    <div class="flex justify-end mb-3">
                     <div
                         class="flex items-center space-x-2 px-3 py-1 bg-white text-black rounded-lg border border-black">
                         <button @click="minus(obat)" class="text-lg font-bold hover:text-red-600">–</button>
@@ -129,32 +72,7 @@
                         <button @click="plus(obat)" class="text-lg font-bold hover:text-green-600">+</button>
                     </div>
                 </div>
-
-                <!-- Detail Obat -->
-                <div class="mb-3 space-y-1.5">
-                    <div class="space-y-1">
-                        <h1 class="text-base font-bold leading-snug truncate">{{ obat.nama_obat }}</h1>
-                        <div class="flex justify-between text-xs text-white/90">
-                            <span class="font-semibold">{{ formattedRupiah(obat.harga_jual) }}</span>
-                            <span class="italic text-white/70">{{ obat.dosis_obat }}</span>
-                        </div>
-                    </div>
-                    <div
-                        class="flex justify-between items-center text-sm bg-white text-black px-3 py-1 rounded-lg mt-2 border border-black">
-                        <span class="font-semibold">Stok</span>
-                        <span :class="[
-                            'font-bold',
-                            obat.stok[obat.stok.length - 1].stok_akhir > 0 ? 'text-green-600' : 'text-red-600'
-                        ]">
-                            {{
-                                obat.stok[obat.stok.length - 1].stok_akhir > 0
-                                    ? obat.stok[obat.stok.length - 1].stok_akhir
-                            : 'Habis'
-                            }}
-                        </span>
-                    </div>
                 </div>
-
                 <!-- Toggle Detail -->
                 <button @click="obat.showMore = !obat.showMore"
                     class="text-xs underline text-white hover:text-gray-200 mt-1 self-start">
@@ -228,13 +146,7 @@
         <!-- Floating Checkout Button -->
         <div class="fixed bottom-6 right-6 z-50">
             <button @click="showDetail(obatCheckout)"
-                class="flex flex-col items-center justify-center gap-2 bg-white hover:bg-emerald-700 hover:text-white text-center font-bold px-6 py-4 rounded-xl shadow-lg border border-black transition duration-300 ease-in-out">
-                <!-- Icon Keranjang -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#8c8200" viewBox="0 0 24 24" stroke-width="1.0"
-                    stroke="#8c8200" class="w-8 h-8">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                </svg>
+                class="flex flex-col items-center justify-center gap-2 bg-white hover:bg-emerald-700 hover:text-white text-center font-bold px-6 py-4 rounded-xl shadow-sm shadow-black transition duration-300 ease-in-out">
 
                 <!-- Nama Pelanggan (jika ada) -->
                 <div v-if="selectedPelanggan !== null" class="text-xs font-medium text-gray-800 dark:text-white">
@@ -242,7 +154,17 @@
                 </div>
 
                 <!-- Teks Checkout -->
-                <h1 class="text-base">Checkout</h1>
+                 <div class="flex space-x-4 items-center">
+                    <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" stroke="#059669" fill="#ffffff" viewBox="0 0 24 24" stroke-width="1.0" class="w-10 h-10">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                </svg>
+                 </div>
+                <div>
+                    <h1 class="text-base font-semibold text-[#059669]">Checkout</h1>
+                </div>
+                 </div>
             </button>
         </div>
 

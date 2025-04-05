@@ -10,7 +10,7 @@
 
         <!-- Tabel Pemasok -->
         <div class="p-4">
-            <div class="overflow-x-auto rounded-lg shadow">
+            <div class="overflow-x-auto shadow">
                 <table class="min-w-full text-sm text-left text-gray-700 bg-white border border-gray-200">
                     <thead class="bg-emerald-600 text-white">
                         <tr>
@@ -101,10 +101,12 @@
 
                     <!-- Tombol Simpan -->
                     <div class="pt-2">
-                        <button type="submit"
-                            class="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition">
+                        <div class="flex justify-center items-center">
+                            <button type="submit"
+                            class="w-1/2 bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition">
                             Simpan
                         </button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -112,73 +114,74 @@
 
 
         <!-- Modal Show Data -->
-        <div v-if="isModalShow" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div class="bg-white p-10 rounded-lg shadow-lg w-auto max-w-5xl">
-                <h2 class="text-lg font-bold mb-4">Data Pemasok</h2>
-                <div class="mb-4">
-                    <label for="nama" class="block text-sm font-medium">Nama:</label>
-                    <div class="w-full px-3 py-2 border rounded focus:ring focus:ring-blue-200">{{ form.nama }}</div>
+        <div v-if="isModalShow" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl text-sm">
+                <h2 class="text-lg font-semibold mb-4">Data Pemasok</h2>
+
+                <div class="mb-3">
+                    <label class="block text-sm font-medium">Nama:</label>
+                    <div class="w-full px-3 py-2 border rounded">{{ form.nama }}</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="block text-sm font-medium">Alamat:</label>
-                    <div class="w-full px-3 py-2 border rounded focus:ring focus:ring-blue-200">{{ form.alamat }}</div>
+                    <div class="w-full px-3 py-2 border rounded">{{ form.alamat }}</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="block text-sm font-medium">Email:</label>
-                    <div class="w-full px-3 py-2 border rounded focus:ring focus:ring-blue-200">{{ form.email }}</div>
+                    <div class="w-full px-3 py-2 border rounded">{{ form.email }}</div>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm font-medium">No Telpon:</label>
-                    <div class="w-full px-3 py-2 border rounded focus:ring focus:ring-blue-200">{{ form.telepon }}</div>
+                    <label class="block text-sm font-medium">No Telepon:</label>
+                    <div class="w-full px-3 py-2 border rounded">{{ form.telepon }}</div>
                 </div>
 
                 <div>
-                    <div class="py-1 font-extrabold text-justify">
-                        <h1>Daftar Obat</h1>
-                    </div>
-                    <div class="max-h-80 overflow-y-auto border rounded-lg">
-                        <table class="w-full border-collapse">
-                            <thead class="bg-gray-200 text-center sticky top-0">
+                    <h3 class="font-bold mb-2">Daftar Obat</h3>
+                    <div class="max-h-64 overflow-y-auto border rounded-lg">
+                        <table class="w-full border-collapse text-xs">
+                            <thead class="bg-gray-200 sticky top-0">
                                 <tr>
-                                    <th class="text-center px-4 py-2 border">ID Obat</th>
-                                    <th class="text-center px-4 py-2 border">Nama Obat</th>
-                                    <th class="text-center px-4 py-2 border">Gambar</th>
-                                    <th class="text-center px-4 py-2 border">Tag Obat</th>
-                                    <th class="text-center px-4 py-2 border">Tipe Obat</th>
-                                    <th class="text-center px-4 py-2 border">Dosis Obat</th>
-                                    <th class="text-center px-4 py-2 border">Harga Obat</th>
+                                    <th class="px-2 py-2 border">ID</th>
+                                    <th class="px-2 py-2 border">Nama</th>
+                                    <th class="px-2 py-2 border">Gambar</th>
+                                    <th class="px-2 py-2 border">Tag</th>
+                                    <th class="px-2 py-2 border">Tipe</th>
+                                    <th class="px-2 py-2 border">Dosis</th>
+                                    <th class="px-2 py-2 border">Harga</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="obat in obatPemasok" :key="obat.id_obat" class="hover:bg-gray-100">
-                                    <td class="text-center px-4 py-2 border">{{ obat.id_obat }}</td>
-                                    <td class="text-center px-4 py-2 border">{{ obat.nama_obat }}</td>
-                                    <td class="text-center px-4 py-2 border">
-                                        <img :src="getFullImgPath(obat.gambar_obat)" alt="{{ obat.nama }}"
-                                            class="w-16 h-16 object-cover rounded" />
+                                <tr v-for="obat in obatPemasok" :key="obat.id_obat"
+                                    class="hover:bg-gray-100 text-center">
+                                    <td class="px-2 py-2 border">{{ obat.id_obat }}</td>
+                                    <td class="px-2 py-2 border">{{ obat.nama_obat }}</td>
+                                    <td class="px-2 py-2 border">
+                                        <img :src="getFullImgPath(obat.gambar_obat)" alt="obat"
+                                            class="w-10 h-10 object-cover rounded" />
                                     </td>
-                                    <td class="text-center px-4 py-2 border">
+                                    <td class="px-2 py-2 border">
                                         <span v-for="(tag, index) in obat.tags" :key="index">
                                             {{ tag.nama_tag }}<span v-if="index < obat.tags.length - 1">, </span>
                                         </span>
                                     </td>
-                                    <td class="text-center px-4 py-2 border">{{ obat.tipe_obat.nama_tipe }}</td>
-                                    <td class="text-center px-4 py-2 border">{{ obat.dosis_obat }}</td>
-                                    <td class="text-center px-4 py-2 border">{{ obat.harga_beli }}</td>
+                                    <td class="px-2 py-2 border">{{ obat.tipe_obat.nama_tipe }}</td>
+                                    <td class="px-2 py-2 border">{{ obat.dosis_obat }}</td>
+                                    <td class="px-2 py-2 border">{{ obat.harga_beli }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="py-4 text-right">
+                <div class="pt-4 text-right">
                     <button @click="closeModal"
-                        class="px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700">
+                        class="px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition">
                         Tutup
                     </button>
                 </div>
             </div>
         </div>
+
 
     </div>
 </template>

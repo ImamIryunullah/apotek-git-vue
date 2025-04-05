@@ -13,102 +13,84 @@
                         class="px-4 bg-emerald-600 border border-black rounded-lg text-white hover:bg-emerald-700 h-[2.6rem]">
                         Filter
                     </button>
-                    <button @click="resetFilter"
-                        class="px-4 bg-gray-500 border border-black rounded-lg text-white hover:bg-gray-600 ml-2 h-[2.6rem]">
-                        Reset
+                </div>
+            </div>
+        </div>
+        <div class="overflow-x-auto font-Roboto py-4">
+            <table class="min-w-full bg-white border border-gray-200 shadow-md text-sm rounded-lg">
+                <thead class="text-white">
+                    <tr class="bg-emerald-600 text-left">
+                        <th class="px-4 py-2 border-b border">ID</th>
+                        <th class="px-4 py-2 border-b border">Kode</th>
+                        <th class="px-4 py-2 border-b border">Detail</th>
+                        <th class="px-4 py-2 border-b border">Tanggal</th>
+                        <th class="px-4 py-2 border-b border">Waktu</th>
+                        <th class="px-4 py-2 border-b border">Jumlah</th>
+                        <th class="px-4 py-2 border-b border">Total</th>
+                        <th class="px-4 py-2 border-b border">Metode</th>
+                        <th class="px-4 py-2 border-b border">Status</th>
+                        <th class="px-4 py-2 border-b border">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="transaksi in paginatedTransaksi" :key="transaksi.id" class="hover:bg-gray-100">
+                        <td class="px-4 py-2 border-b border font-bold">{{ transaksi.id_transaksi }}</td>
+                        <td class="px-4 py-2 border-b border">{{ transaksi.kode_transaksi }}</td>
+                        <td class="px-4 py-2 border-b border">
+                            <div @click="showDetail(transaksi)"
+                                class="cursor-pointer p-1 rounded hover:bg-gray-200 inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-emerald-700" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625a1.125 1.125 0 0 0-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75a1.125 1.125 0 0 0 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                </svg>
+                            </div>
+                        </td>
+                        <td class="px-4 py-2 border-b border">{{ transaksi.created_at.split('T')[0] }}</td>
+                        <td class="px-4 py-2 border-b border">{{
+                            transaksi.created_at.split('T')[1].split("-")[0] }}</td>
+                        <td class="px-4 py-2 border-b border">{{ sumJumlah(transaksi.obats) }}</td>
+                        <td class="px-4 py-2 border-b border">{{ formattedRupiah(transaksi.total_harga) }}</td>
+                        <td class="px-4 py-2 border-b border">{{ transaksi.metode_bayar }}</td>
+                        <td class="px-4 py-2 border-b border">{{ transaksi.status }}</td>
+                        <td class="px-4 py-2 border-b border">
+                            <div class="flex space-x-2">
+                                <button @click="openEditModal(transaksi)" class="p-1 rounded hover:bg-gray-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 0 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z" />
+                                    </svg>
+                                </button>
+                                <button @click="deleteTransaksi(transaksi)" class="p-1 rounded hover:bg-gray-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166M18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084A2.25 2.25 0 0 1 5.84 19.673L4.772 5.79a48.108 48.108 0 0 1 3.478-.397m7.5 0a48.667 48.667 0 0 0-7.5 0v-.916c0-1.18.91-2.164 2.09-2.201a51.964 51.964 0 0 1 3.32 0c1.18.037 2.09 1.022 2.09 2.201v.916Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="flex justify-end pt-4 pr-6">
+                <div class="flex items-center space-x-4 text-sm">
+                    <button @click="prevPage"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1 rounded-md border border-black">
+                        Prev
+                    </button>
+                    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                    <button @click="nextPage"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1 rounded-md border border-black">
+                        Next
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="overflow-x-auto font-Roboto pt-6">
-            <table class="min-w-full bg-white border border-gray-200 shadow-md text-base rounded-lg">
-                <thead>
-                    <tr class="bg-gray-200 text-left">
-                        <th class="pl-20 py-3 border-b border-gray-300">ID Transaksi</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Kode</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Detail</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Tanggal</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Waktu</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Jumlah</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Harga Total</th>
-                        <th class="pl-8 py-3 border-b border-gray-300">Metode Bayar</th>
-                        <th class="pl-8 py-3 border-b border-gray-300">Status Bayar</th>
-                        <th class="pl-8 py-3 border-b border-gray-300">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="transaksi in paginatedTransaksi" :key="transaksi.id" class="hover:bg-gray-100">
-                        <td class="pl-20 py-2 border-b border-gray-300 font-bold">{{ transaksi.id_transaksi }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{ transaksi.kode_transaksi }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300 text-sm">
-                            <div class="flex">
-                                <div class="cursor-pointer p-2 rounded hover:bg-gray-200 items-center"
-                                    @click="showDetail(transaksi)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="#176B87" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{ transaksi.created_at.split('T')[0] }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{
-                            transaksi.created_at.split('T')[1].split("-")[0] }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{ sumJumlah(transaksi.obats) }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{ formattedRupiah(transaksi.total_harga) }}</td>
-                        <td class="px-10 py-2 border-b border-gray-300">{{ transaksi.metode_bayar }}</td>
-                        <td class="px-10 py-2 border-b border-gray-300">{{ transaksi.status }}</td>
-                        <td class="px-4 pb-4 border-b border-gray-300 flex items-center space-x-4 pt-6">
-                            <button @click="openEditModal(transaksi)">
-                                <div class="p-2 rounded hover:bg-gray-200 cursor-pointer relative -top-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                    </svg>
-                                </div>
-                            </button>
-                            <button @click="deleteTransaksi(transaksi)">
-                                <div class="p-2 rounded hover:bg-gray-200 cursor-pointer relative -top-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                    </svg>
-                                </div>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div>
-                <div class="flex justify-end pt-6 pr-20">
-                    <div class="flex justify-between space-x-4">
-                        <button>
-                            <div @click="prevPage"
-                                class="border border-black bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">
-                                <div>
-                                    <h1>Prev</h1>
-                                </div>
-                            </div>
-                        </button>
-                        <div class="text-center mt-4">
-                            <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                        </div>
-                        <button>
-                            <div @click="nextPage"
-                                class="border border-black bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">
-                                <div>
-                                    <h1>Next</h1>
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div v-if="showModals" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
             <div class="bg-white rounded-lg shadow-lg pt-10 pb-16 w-[30rem]">
@@ -167,50 +149,40 @@
             </div>
         </div>
 
-        <div v-if="showModal" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
-            <div class="bg-white rounded-lg shadow-lg pt-10 pb-16 w-[70rem]">
-                <div class="flex justify-end pr-6 pt-2">
-                    <button @click="closeModal">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
-                            viewBox="0 0 256 256" class="hover:fill-red-600">
-                            <path
-                                d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div v-if="detailsObat">
-                    <div class="-mt-6 pb-4">
-                        <div>
-                            <h2 class="text-lg font-semibold text-center">Detail Obat</h2>
-                        </div>
-                    </div>
-                    <div class="border-b-2">
-                    </div>
-                    <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
+        <div v-if="showModal"
+            class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50 px-4">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
+                <!-- Close Button -->
+                <button @click="closeModal" class="absolute top-4 right-4 hover:scale-110 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256"
+                        class="hover:fill-red-600">
+                        <path
+                            d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z" />
+                    </svg>
+                </button>
+
+                <!-- Detail Obat -->
+                <div v-if="detailsObat" class="px-6 pt-10">
+                    <h2 class="text-lg font-semibold text-center mb-4">Detail Obat</h2>
+                    <div class="border-b mb-4"></div>
+                    <div class="space-y-6">
                         <table v-for="(listCheckout) in selectedDetail.obats" :key="listCheckout.id_obat"
-                            class="flex justify-center w-full">
-                            <!-- <div class="pb- 20">{{ index }}</div> -->
+                            class="w-full">
                             <tbody>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope=" row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Kode
-                                        Obat
-                                    </th>
+                                <tr>
+                                    <th class="text-left w-1/4 py-2">Kode Obat</th>
                                     <td>{{ listCheckout.obat.kode_obat }}</td>
                                 </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Nama
-                                        Obat
-                                    </th>
+                                <tr>
+                                    <th class="text-left py-2">Nama Obat</th>
                                     <td>{{ listCheckout.obat.nama_obat }}</td>
                                 </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Dosis
-                                    </th>
+                                <tr>
+                                    <th class="text-left py-2">Dosis</th>
                                     <td>{{ listCheckout.obat.dosis_obat }}</td>
                                 </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Tag</th>
+                                <tr>
+                                    <th class="text-left py-2 align-top">Tag</th>
                                     <td>
                                         <div class="flex flex-wrap">
                                             <span v-for="(tag, index) in listCheckout.obat.tags" :key="index"
@@ -220,87 +192,59 @@
                                         </div>
                                     </td>
                                 </tr>
-
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-32">Harga
-                                        Obat
-                                    </th>
+                                <tr>
+                                    <th class="text-left py-2 mb-4">Harga Obat</th>
                                     <td>{{ formattedRupiah(listCheckout.obat.harga_jual) }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
 
+                <!-- Detail Stok -->
+                <div v-if="detailsStok" class="px-6 pt-10">
+                    <h2 class="text-lg font-semibold text-center mb-4">Detail Stok</h2>
+                    <div class="border-b mb-4"></div>
+                    <table class="w-full max-w-xl mx-auto">
+                        <tbody>
+                            <tr>
+                                <th class="text-left w-1/3 py-2">Tipe Transaksi</th>
+                                <td>{{ selectedDetail.tipeTransaksi }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-left py-2">Stok Awal</th>
+                                <td>{{ selectedDetail.stokAwal }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-left py-2">Jumlah</th>
+                                <td>{{ selectedDetail.jumlahTransaksi }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-left py-2">Stok Akhir</th>
+                                <td>{{ selectedDetail.stokAkhir }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-left py-2">Tanggal</th>
+                                <td>{{ selectedDetail.tgl.split('T')[0] }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-left py-2">Waktu</th>
+                                <td>{{ selectedDetail.tgl.split('T')[1].split("-")[0] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div v-if="detailsStok">
-                    <div class="-mt-6">
-                        <div>
-                            <h2 class="text-lg font-semibold text-center">Detail Stok</h2>
-                        </div>
-                        <div class="border-b-2 pb-4">
-                        </div>
-                        <table class="flex justify-center">
-                            <tbody class="px-20">
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope=" row" class="text-start py-3 border-b border-gray-300 pl-4 pr-20">Tipe
-                                        Transaksi
-                                    </th>
-                                    <td>{{ selectedDetail.tipeTransaksi }}</td>
-                                </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-20">Stok
-                                        Awal</th>
-                                    <td>{{ selectedDetail.stokAwal }}</td>
-                                </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope=" row" class="text-start py-3 border-b border-gray-300 pl-4 pr-20">Jumlah
-                                    </th>
-                                    <td>{{ selectedDetail.jumlahTransaksi }}</td>
-                                </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope="row" class="text-start py-3 border-b border-gray-300 pl-4 pr-20">Stok
-                                        Akhir</th>
-                                    <td>{{ selectedDetail.stokAkhir }}</td>
-                                </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope=" row" class="text-start py-3 border-b border-gray-300 pl-4">Tanggal
-                                    </th>
-                                    <td>{{ selectedDetail.tgl.split('T')[0] }}
-                                    </td>
-                                </tr>
-                                <tr class="py-3 border-b border-gray-300">
-                                    <th scope=" row" class="text-start py-3 border-b border-gray-300 pl-4">Waktu
-                                    </th>
-                                    <td>{{
-                                        selectedDetail.tgl.split('T')[1].split("-")[0] }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="flex justify-end pt-6 pr-20">
-                    <div class="flex justify-between space-x-4">
-                        <button>
-                            <div @click="prev"
-                                class="border bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">
-                                <div>
-                                    <h1>Prev</h1>
-                                </div>
-                            </div>
-                        </button>
-                        <button>
-                            <div @click="next"
-                                class="border bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">
-                                <div>
-                                    <h1>Next</h1>
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                </div>
+
+                <!-- Navigation -->
+                <!-- <div class="flex justify-end gap-4 pt-6 px-7 pb-10">
+                    <button @click="prev"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">Prev</button>
+                    <button @click="next"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">Next</button>
+                </div> -->
             </div>
         </div>
+
     </div>
 </template>
 

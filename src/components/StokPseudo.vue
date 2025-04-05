@@ -114,71 +114,57 @@
         </div>
     </div>
     <div class="font-Roboto tracking-wider -mx-2">
-        <div class="px-6 pt-6 min-h-screen">
+        <div class="px-2 pt-2 min-h-screen">
 
-            <div class="overflow-x-auto mt-4">
-                <div></div>
-                <table class="min-w-full bg-white border border-gray-200 shadow-md text-base rounded-lg">
-                    <thead>
-                        <tr class="bg-gray-200 text-left text-base">
-                            <th class="pl-10 py-3 border-b border-gray-300">ID Stok</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Kode Obat</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Nama Obat</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Tipe Transaksi</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Stok Awal</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Jumlah Transaksi</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Stok Sekarang</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Lokasi</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Tanggal Kadaluarsa</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Keterangan</th>
-                            <th class="px-4 py-3 border-b border-gray-300">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="stok in paginatedTransaksi" :key="stok.id" class="hover:bg-gray-100 text-base">
-                            <td class="pl-10 py-6 border-b border-gray-300 font-bold">{{ stok.id_stok }}</td>
-                            <td class="px-4 py-6 border-b border-gray-300">
-                                {{
-                                    obatList.find((obat) => obat.id_obat === stok.obat_id)?.kode_obat || "Tidak Diketahui"
-                                }}
-                            </td>
-                            <td class="px-4 py-6 border-b border-gray-300">
-                                {{
-                                    obatList.find((obat) => obat.id_obat === stok.obat_id)?.nama_obat || "Tidak Diketahui"
-                                }}
-                            </td>
-                            <td class="px-4 py-6 border-b border-gray-300">{{ stok.tipe_transaksi }}</td>
-                            <td class="px-4 py-6 border-b border-gray-300">{{ stok.stok_awal }}</td>
-                            <td class="px-4 py-6 border-b border-gray-300">{{ stok.jumlah_stok_transaksi }}</td>
-                            <td class="px-4 py-6 border-b border-gray-300">{{ stok.stok_akhir }}</td>
-                            <td class="px-4 py-6 border-b border-gray-300">{{ stok.lokasi }}</td>
-                            <td class="px-4 py-6 border-b border-gray-300">{{ getTanggal(stok.tanggal_kadaluwarsa) }}
-                            </td>
-                            <td class="px-4 py-6 border-b border-gray-300">{{ stok.keterangan }}</td>
-                            <td class="px-4 py-6 border-b border-gray-300 flex items-center space-x-4">
-                                <!-- <button>
-                                    <div class="p-2 rounded hover:bg-gray-200 cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                        </svg>
-                                    </div>
-                                </button> -->
-                                <button @click="deleteStok(stok.id_stok)" class="px-4 transition duration-300">
-                                    <div class="p-2 rounded hover:bg-gray-200 cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                        </svg>
-                                    </div>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="overflow-x-auto mt-2">
+  <table class="min-w-full bg-white border border-gray-200 shadow-sm text-sm rounded-md">
+    <thead class="text-white">
+      <tr class="bg-emerald-600 text-left">
+        <th class="pl-4 py-2 border-b border">No.</th>
+        <th class="px-2 py-2 border-b border">Kode Obat</th>
+        <th class="px-2 py-2 border-b border">Nama Obat</th>
+        <th class="px-2 py-2 border-b border">Tipe Transaksi</th>
+        <th class="px-2 py-2 border-b border">Stok Awal</th>
+        <th class="px-2 py-2 border-b border">Jumlah Transaksi</th>
+        <th class="px-2 py-2 border-b border">Stok Sekarang</th>
+        <th class="px-2 py-2 border-b border">Lokasi</th>
+        <th class="px-2 py-2 border-b border">Tanggal Kadaluarsa</th>
+        <th class="px-2 py-2 border-b border">Keterangan</th>
+        <th class="px-2 py-2 border-b border">Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="stok in paginatedTransaksi" :key="stok.id" class="hover:bg-gray-100">
+        <td class="pl-4 py-2 border-b border font-semibold">{{ stok.id_stok }}</td>
+        <td class="px-2 py-2 border-b border">
+          {{ obatList.find((obat) => obat.id_obat === stok.obat_id)?.kode_obat || "Tidak Diketahui" }}
+        </td>
+        <td class="px-2 py-2 border-b border">
+          {{ obatList.find((obat) => obat.id_obat === stok.obat_id)?.nama_obat || "Tidak Diketahui" }}
+        </td>
+        <td class="px-2 py-2 border-b border">{{ stok.tipe_transaksi }}</td>
+        <td class="px-2 py-2 border-b border">{{ stok.stok_awal }}</td>
+        <td class="px-2 py-2 border-b border">{{ stok.jumlah_stok_transaksi }}</td>
+        <td class="px-2 py-2 border-b border">{{ stok.stok_akhir }}</td>
+        <td class="px-2 py-2 border-b border">{{ stok.lokasi }}</td>
+        <td class="px-2 py-2 border-b border">{{ getTanggal(stok.tanggal_kadaluwarsa) }}</td>
+        <td class="px-2 py-2 border-b border">{{ stok.keterangan }}</td>
+        <td class="px-2 py-2 border-b border">
+          <button @click="deleteStok(stok.id_stok)" class="transition duration-200">
+            <div class="p-1 rounded hover:bg-gray-200 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+              </svg>
             </div>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
             <div>
                 <div class="flex justify-end pt-6 pr-30 pb-10">
                     <div class="flex justify-between space-x-4">

@@ -3,17 +3,17 @@
     <div>
       <div class="flex space-x-4 py-6 relative -left-6">
         <div @click="openCreateModal" class="bg-emerald-600 hover:bg-emerald-700 border border-black rounded-lg">
-        <button class="px-6 py-2 text-white font-bold">
-          <h1>Tambah Obat</h1>
-        </button>
-      </div>
-      <div @click="openCreateModalExcel"
-        class="bg-emerald-600 ml-3 hover:bg-emerald-700 border border-black rounded-lg">
-        <button class="px-6 py-2 text-white font-bold">
-          <h1>Tambah Obat Excel</h1>
-        </button>
+          <button class="px-6 py-2 text-white font-bold">
+            <h1>Tambah Obat</h1>
+          </button>
+        </div>
+        <div @click="openCreateModalExcel"
+          class="bg-emerald-600 ml-3 hover:bg-emerald-700 border border-black rounded-lg">
+          <button class="px-6 py-2 text-white font-bold">
+            <h1>Tambah Obat Excel</h1>
+          </button>
 
-      </div>
+        </div>
         <div>
           <div>
             <div class="relative">
@@ -71,171 +71,126 @@
       </div>
     </div>
   </div>
-  <div class="font-Roboto tracking-wider px-4 py-6">
-    <div class="flex pb-6">
-     
-    </div>
-    <div class="flex pb-2"></div>
-    <div class="overflow-x-auto font-Roboto">
-      <table class="min-w-full bg-white border border-gray-200 shadow-md text-base rounded-lg">
-        <thead>
-          <tr class="bg-gray-200 text-left">
-            <th class="pl-10 py-3 border-b border-gray-300">No</th>
-            <th class="pl-10 py-3 border-b border-gray-300">Nama Obat</th>
-            <th class="pl-10 py-3 border-b border-gray-300">Kode Obat</th>
-            <th class="px-4 py-3 border-b border-gray-300">Gambar</th>
-            <th class="px-4 py-3 border-b border-gray-300">Dosis</th>
-            <th class="px-4 py-3 border-b border-gray-300">Deskripsi</th>
-            <th class="px-4 py-3 border-b border-gray-300">Harga Beli</th>
-            <th class="px-4 py-3 border-b border-gray-300">Harga Jual</th>
-            <th class="px-4 py-3 border-b border-gray-300">Margin</th>
-            <th class="px-4 py-3 border-b border-gray-300">Tag</th>
-            <th class="px-4 py-3 border-b border-gray-300">Tipe Obat</th>
-            <th class="px-4 py-3 border-b border-gray-300">Stok Akhir</th>
-            <th class="pl-8 py-3 border-b border-gray-300">Aksi</th>
+  <div class="font-Roboto tracking-wider px-2 py-4">
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-200 shadow-md text-sm rounded-lg">
+        <thead class="bg-emerald-600 text-white">
+          <tr class="text-left">
+            <th class="pl-4 py-2 border-b border">No</th>
+            <th class="pl-4 py-2 border-b border">Nama</th>
+            <th class="pl-4 py-2 border-b border">Kode</th>
+            <th class="px-2 py-2 border-b border">Gambar</th>
+            <th class="px-2 py-2 border-b border">Dosis</th>
+            <th class="px-2 py-2 border-b border">Deskripsi</th>
+            <th class="px-2 py-2 border-b border">Beli</th>
+            <th class="px-2 py-2 border-b border">Jual</th>
+            <th class="px-2 py-2 border-b border">Margin</th>
+            <th class="px-2 py-2 border-b border">Tag</th>
+            <th class="px-2 py-2 border-b border">Tipe</th>
+            <th class="px-2 py-2 border-b border">Stok</th>
+            <th class="px-2 py-2 border-b border">Aksi</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="obat in paginatedObats" :key="obat.id" class="hover:bg-gray-100">
-            <td class="pl-10 py-4 border-b border-gray-300 font-bold">
-              {{ obat.id_obat }}
-            </td>
-            <td class="pl-10 py-4 border-b border-gray-300 font-bold">
-              {{ obat.nama_obat }}
-            </td>
-            <td class="pl-10 py-4 border-b border-gray-300 font-bold">
-              {{ obat.kode_obat }}
-            </td>
-            <td class="px-4 py-4 border-b border-gray-300">
+            <td class="pl-4 py-2 border-b border font-bold">{{ obat.id_obat }}</td>
+            <td class="pl-4 py-2 border-b border font-bold">{{ obat.nama_obat }}</td>
+            <td class="pl-4 py-2 border-b border font-bold">{{ obat.kode_obat }}</td>
+            <td class="px-2 py-2 border-b border">
               <img :src="getFullImgPath(obat.gambar_obat)" alt="{{ obat.nama }}"
-                class="w-16 h-16 object-cover rounded" />
+                class="w-12 h-12 object-cover rounded" />
             </td>
-            <td class="px-4 py-4 border-b border-gray-300">
-              {{ obat.dosis_obat }}
-            </td>
-            <td class="px-4 py-4 border-b border-gray-300 text-sm">
+            <td class="px-2 py-2 border-b border">{{ obat.dosis_obat }}</td>
+            <td class="px-2 py-2 border-b border text-xs">
               {{ obat.deskripsi.split(" ").slice(0, 10).join(" ") + "..." }}
             </td>
-            <td class="px-4 py-4 border-b border-gray-300">
-              {{ formattedRupiah(obat.harga_beli) }}
-            </td>
-            <td class="px-4 py-4 border-b border-gray-300">
-              {{ formattedRupiah(obat.harga_jual) }}
-            </td>
-            <td class="px-4 py-4 border-b border-gray-300">
-              {{ formattedRupiah(obat.margin) }}
-            </td>
-            <td class="px-4 py-4 border-b border-gray-300">
+            <td class="px-2 py-2 border-b border">{{ formattedRupiah(obat.harga_beli) }}</td>
+            <td class="px-2 py-2 border-b border">{{ formattedRupiah(obat.harga_jual) }}</td>
+            <td class="px-2 py-2 border-b border">{{ formattedRupiah(obat.margin) }}</td>
+            <td class="px-2 py-2 border-b border">
               <span v-for="(tag, index) in obat.tags" :key="index">
-                {{ tag.nama_tag }}
-                <span v-if="index < obat.tags.length - 1">, </span>
-                <!-- Menambahkan koma antara elemen -->
+                {{ tag.nama_tag }}<span v-if="index < obat.tags.length - 1">, </span>
               </span>
             </td>
-            <td class="px-4 py-4 border-b border-gray-300">
-              {{ obat.tipe_obat.nama_tipe }}
+            <td class="px-2 py-2 border-b border">{{ obat.tipe_obat.nama_tipe }}</td>
+            <td class="px-2 py-2 border-b border">
+              <span v-if="obat.stok.length > 0">{{ obat.stok[obat.stok.length - 1].stok_akhir }}</span>
+              <span v-else>Belum Ada</span>
             </td>
-            <td v-if="obat.stok.length > 0" class="px-4 py-4 border-b border-gray-300">
-              {{ obat.stok[obat.stok.length - 1].stok_akhir }}
-            </td>
-            <td v-else>Stok Belum Di Tambahkan</td>
-            <td class="px-4 pb-4 border-b border-gray-300 flex items-center space-x-4 pt-10">
-              <button @click="openEditModal(obat)">
-                <div class="p-2 rounded hover:bg-gray-200 cursor-pointer relative -top-2">
+            <td class="px-2 py-2 border-b border">
+              <div class="flex items-center space-x-2">
+                <button @click="openEditModal(obat)" class="p-1 rounded hover:bg-gray-200">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6">
+                    stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
-                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19.5 7.125 18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                   </svg>
-                </div>
-              </button>
-              <button @click="deleteObat(obat)">
-                <div class="p-2 rounded hover:bg-gray-200 cursor-pointer relative -top-2">
+                </button>
+                <button @click="deleteObat(obat)" class="p-1 rounded hover:bg-gray-200">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6">
+                    stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
-                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9M19.23 5.79A48.11 48.11 0 0 0 15.75 5.4M8.25 5.4a48.11 48.11 0 0 0-3.48.39M3 6.21V18.75A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V6.21" />
                   </svg>
-                </div>
-              </button>
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
-      <div>
-        <div class="flex justify-end pt-6 pr-20">
-          <div class="flex justify-between space-x-4">
-            <button>
-              <div @click="prevPage"
-                class="border border-black bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">
-                <div>
-                  <h1>Prev</h1>
-                </div>
-              </div>
-            </button>
-            <div class="text-center mt-4">
-              <span>Page {{ currentPage }} of {{ totalPages }}</span>
-            </div>
-            <button>
-              <div @click="nextPage"
-                class="border border-black bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">
-                <div>
-                  <h1>Next</h1>
-                </div>
-              </div>
-            </button>
-          </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-end pt-4 pr-8">
+        <div class="flex items-center space-x-4 text-sm">
+          <button @click="prevPage"
+            class="border border-black bg-emerald-600 hover:bg-emerald-700 text-white py-1 px-4 rounded-md">
+            Prev
+          </button>
+          <span>Page {{ currentPage }} of {{ totalPages }}</span>
+          <button @click="nextPage"
+            class="border border-black bg-emerald-600 hover:bg-emerald-700 text-white py-1 px-4 rounded-md">
+            Next
+          </button>
         </div>
       </div>
     </div>
   </div>
+
   <div v-if="showModal" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50 px-4">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
-      <!-- Close Button -->
-      <div class="absolute top-4 right-4">
-        <button @click="closeModal" class="hover:scale-110 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256"
-            class="hover:fill-red-600">
-            <path
-              d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z" />
-          </svg>
-        </button>
-      </div>
+      <button @click="closeModal" class="absolute top-4 right-4 hover:scale-110 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256"
+          class="hover:fill-red-600">
+          <path
+            d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z" />
+        </svg>
+      </button>
 
-      <!-- Title -->
       <div class="pt-6 px-6">
         <h2 class="text-xl font-semibold text-center mb-4">Edit Obat</h2>
       </div>
-
       <div class="border-b"></div>
 
-      <!-- Form -->
       <form @submit.prevent="updateObat" class="p-6 space-y-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block font-medium mb-1">Nama Obat</label>
-            <input v-model="selectedObat.nama_obat" type="text"
+          <div v-for="(field, i) in [
+            { label: 'Nama Obat', model: 'nama_obat', type: 'text' },
+            { label: 'Dosis', model: 'dosis_obat', type: 'text' },
+            { label: 'Golongan Obat', model: 'golongan_obat', type: 'text' },
+            { label: 'Merk Obat', model: 'merk_obat', type: 'text' }
+          ]" :key="i">
+            <label class="block font-medium mb-1">{{ field.label }}</label>
+            <input v-model="selectedObat[field.model]" :type="field.type"
               class="w-full border border-gray-300 rounded px-2 py-2" />
           </div>
+
           <div>
             <label class="block font-medium mb-1">Kode Obat</label>
             <div class="border border-gray-300 rounded px-2 py-2">{{ generateKodeObat(selectedObat.nama_obat) }}</div>
           </div>
-          <div>
-            <label class="block font-medium mb-1">Dosis</label>
-            <input v-model="selectedObat.dosis_obat" type="text"
-              class="w-full border border-gray-300 rounded px-2 py-2" />
-          </div>
-          <div>
-            <label class="block font-medium mb-1">Golongan Obat</label>
-            <input v-model="selectedObat.golongan_obat" type="text"
-              class="w-full border border-gray-300 rounded px-2 py-2" />
-          </div>
-          <div>
-            <label class="block font-medium mb-1">Merk Obat</label>
-            <input v-model="selectedObat.merk_obat" type="text"
-              class="w-full border border-gray-300 rounded px-2 py-2" />
-          </div>
+
           <div>
             <label class="block font-medium mb-1">Resep Dokter</label>
             <select v-model="selectedObat.is_prescription" class="w-full border border-gray-300 rounded px-2 py-2">
@@ -243,6 +198,7 @@
               <option :value="false">Tidak</option>
             </select>
           </div>
+
           <div>
             <label class="block font-medium mb-1">Pemasok</label>
             <select v-model="selectedObat.id_pemasok" class="w-full border border-gray-300 rounded px-2 py-2">
@@ -251,6 +207,7 @@
               </option>
             </select>
           </div>
+
           <div>
             <label class="block font-medium mb-1">Tipe Obat</label>
             <select v-model="selectedObat.id_tipe_obat" class="w-full border border-gray-300 rounded px-2 py-2">
@@ -267,7 +224,6 @@
             class="w-full border border-gray-300 rounded px-2 py-2 h-24"></textarea>
         </div>
 
-        <!-- Tag Checkbox -->
         <div>
           <label class="block font-medium mb-1">Tag Obat</label>
           <div class="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto border border-gray-300 rounded p-2">
@@ -280,7 +236,6 @@
           </div>
         </div>
 
-        <!-- Harga Section -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block font-medium mb-1">Harga Beli</label>
@@ -300,7 +255,6 @@
           </div>
         </div>
 
-        <!-- Submit Button -->
         <div class="flex justify-end mt-6">
           <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded">
             Save Changes
@@ -310,52 +264,53 @@
     </div>
   </div>
 
+
   <div v-if="showCreateModal" class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
     <div
-      class="bg-white rounded-xl shadow-2xl w-[44rem] max-w-full p-6 relative border border-black max-h-[90vh] overflow-y-auto">
+      class="bg-white rounded-lg shadow-xl w-[42rem] max-w-full p-4 relative border border-black max-h-[90vh] overflow-y-auto text-sm">
 
       <!-- Tombol Close -->
-      <button @click="closeCreateModal" class="absolute top-4 right-4 hover:text-red-600 transition">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+      <button @click="closeCreateModal" class="absolute top-3 right-3 hover:text-red-600 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 256 256">
           <path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Z
-                 M165.66,101.66L139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32
-                 L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z" />
+               M165.66,101.66L139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32
+               L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32Z" />
         </svg>
       </button>
 
       <!-- Judul -->
-      <h2 class="text-xl font-semibold text-center mb-4">Tambah Obat</h2>
-      <hr class="mb-4">
+      <h2 class="text-base font-semibold text-center mb-2">Tambah Obat</h2>
+      <hr class="mb-3">
 
-      <form @submit.prevent="createObat" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form @submit.prevent="createObat" class="grid grid-cols-1 md:grid-cols-2 gap-2">
         <!-- Nama Obat -->
         <div>
-          <label class="block font-medium">Nama Obat</label>
+          <label class="block font-medium mb-1">Nama Obat</label>
           <input @change="getGambarObat(newObat.nama_obat)" v-model="newObat.nama_obat" type="text" class="input-form"
             required>
         </div>
 
         <!-- Kode Obat -->
         <div>
-          <label class="block font-medium">Kode Obat</label>
+          <label class="block font-medium mb-1">Kode Obat</label>
           <input v-model="newObat.kode_obat" type="text" class="input-form" required disabled>
         </div>
 
         <!-- Dosis -->
         <div>
-          <label class="block font-medium">Dosis</label>
+          <label class="block font-medium mb-1">Dosis</label>
           <input v-model="newObat.dosis_obat" type="text" class="input-form" required>
         </div>
 
         <!-- Merk -->
         <div>
-          <label class="block font-medium">Merk Obat</label>
+          <label class="block font-medium mb-1">Merk Obat</label>
           <input v-model="newObat.merk_obat" type="text" class="input-form" required>
         </div>
 
         <!-- Resep -->
         <div>
-          <label class="block font-medium">Resep Dokter</label>
+          <label class="block font-medium mb-1">Resep Dokter</label>
           <select v-model="newObat.is_prescription" class="input-form">
             <option :value="true">Ya</option>
             <option :value="false">Tidak</option>
@@ -364,25 +319,25 @@
 
         <!-- Golongan -->
         <div>
-          <label class="block font-medium">Golongan Obat</label>
+          <label class="block font-medium mb-1">Golongan</label>
           <input v-model="newObat.golongan_obat" type="text" class="input-form" required>
         </div>
 
         <!-- Harga Beli -->
         <div>
-          <label class="block font-medium">Harga Beli</label>
+          <label class="block font-medium mb-1">Harga Beli</label>
           <input v-model.number="newObat.harga_beli" type="number" class="input-form" required>
         </div>
 
         <!-- Harga Jual -->
         <div>
-          <label class="block font-medium">Harga Jual</label>
+          <label class="block font-medium mb-1">Harga Jual</label>
           <input v-model.number="newObat.harga_jual" type="number" class="input-form" required>
         </div>
 
         <!-- Pemasok -->
         <div>
-          <label class="block font-medium">Pemasok</label>
+          <label class="block font-medium mb-1">Pemasok</label>
           <select v-model="newObat.id_pemasok" class="input-form" required>
             <option v-for="pemasok in pemasoks" :key="pemasok.id_pemasok" :value="pemasok.id_pemasok">{{ pemasok.nama }}
             </option>
@@ -391,23 +346,23 @@
 
         <!-- Tipe Obat -->
         <div>
-          <label class="block font-medium">Tipe Obat</label>
+          <label class="block font-medium mb-1">Tipe Obat</label>
           <select v-model="newObat.id_tipe_obat" class="input-form" required>
             <option v-for="tipe in tipeObats" :key="tipe.id_tipe_obat" :value="tipe.id_tipe_obat">{{ tipe.nama_tipe }}
             </option>
           </select>
         </div>
 
-        <!-- Deskripsi (Full Width) -->
+        <!-- Deskripsi -->
         <div class="md:col-span-2">
-          <label class="block font-medium">Deskripsi</label>
-          <textarea v-model="newObat.deskripsi" class="input-form" rows="3" required></textarea>
+          <label class="block font-medium mb-1">Deskripsi</label>
+          <textarea v-model="newObat.deskripsi" class="input-form" rows="2" required></textarea>
         </div>
 
-        <!-- Tag Obat (Full Width) -->
+        <!-- Tag Obat -->
         <div class="md:col-span-2">
-          <label class="block font-medium">Tag Obat</label>
-          <div class="max-h-40 overflow-y-auto border border-gray-300 rounded p-2">
+          <label class="block font-medium mb-1">Tag Obat</label>
+          <div class="max-h-32 overflow-y-auto border border-gray-300 rounded p-2 space-y-1">
             <label v-for="tag in tagObats" :key="tag.id_tag_obat" class="flex items-center space-x-2">
               <input type="checkbox" :value="tag.id_tag_obat" v-model="selectedTags" />
               <span>{{ tag.nama_tag }}</span>
@@ -415,26 +370,29 @@
           </div>
         </div>
 
-        <!-- Gambar (Full Width) -->
+        <!-- Gambar -->
         <div class="md:col-span-2">
-          <label class="block font-medium mb-2">Gambar Obat</label>
-          <button @click="showModalGambar = true" type="button" class="px-4 py-2 bg-blue-600 text-white rounded">Pilih
-            Gambar</button>
+          <label class="block font-medium mb-1">Gambar Obat</label>
+          <button @click="showModalGambar = true" type="button"
+            class="px-3 py-1.5 bg-blue-600 text-white rounded text-sm">
+            Pilih Gambar
+          </button>
           <div v-if="newObat.gambar_obat" class="mt-2">
-            <p class="text-sm text-gray-600">Gambar Terpilih:</p>
-            <img :src="getGambar(newObat.gambar_obat)" class="w-32 mt-2 rounded border" />
+            <p class="text-xs text-gray-600">Gambar Terpilih:</p>
+            <img :src="getGambar(newObat.gambar_obat)" class="w-24 mt-1 rounded border" />
           </div>
         </div>
 
-        <!-- Tombol Submit (Full Width) -->
-        <div class="md:col-span-2 flex justify-center pt-4">
-          <button type="submit" class="px-6 py-2 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-700">
+        <!-- Submit -->
+        <div class="md:col-span-2 flex justify-center pt-3">
+          <button type="submit" class="px-5 py-1.5 bg-emerald-600 text-white font-medium rounded hover:bg-emerald-700">
             Tambah Obat
           </button>
         </div>
       </form>
     </div>
   </div>
+
 
   <div v-if="showCreateModalexcel" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto px-3 py-3">

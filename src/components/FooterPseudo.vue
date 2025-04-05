@@ -12,11 +12,8 @@
   
         <!-- Kolom Branding -->
         <div class="flex flex-col items-start md:items-end justify-between space-y-4 md:space-y-0">
-          <div class="bg-white text-black border border-black rounded px-4 py-2 w-fit">
-            <span class="font-bold text-base">plcnwks</span>
-          </div>
           <p class="text-white/80 text-xs md:text-right">
-            © 2024 - Apotek Management. All rights reserved.
+            PLCNWKS © 2024 - Apotek Management. All rights reserved.
           </p>
         </div>
   

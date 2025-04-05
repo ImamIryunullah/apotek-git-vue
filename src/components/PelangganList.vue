@@ -1,48 +1,46 @@
 <template>
     <div class="font-Roboto">
-        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 bg-white px-6 py-4 border-b border-gray-200 shadow-sm">
+        <div
+            class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 bg-white px-6 py-4 border-b border-gray-200 shadow-sm">
             <h1 class="text-xl font-semibold text-gray-800">Manajemen Pelanggan</h1>
             <button @click="openModalCreate"
                 class="inline-flex items-center justify-center px-4 py-2 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition duration-150 ease-in-out">
                 Tambah Pelanggan
             </button>
         </div>
+
         <div class="p-4">
-            <table class="min-w-full border border-gray-200 bg-white">
-                <thead class="bg-white border border-black">
+            <table class="min-w-full border border-gray-200 bg-white text-sm font-Roboto">
+                <thead class="bg-emerald-600 text-white">
                     <tr>
-                        <th class="text-left px-4 py-2 border">ID</th>
-                        <th class="text-left px-4 py-2 border">Nama</th>
-                        <th class="text-left px-4 py-2 border">Alamat</th>
-                        <th class="text-left px-4 py-2 border">Telepon</th>
-                        <th class="text-left px-4 py-2 border">Email</th>
-                        <th class="text-left px-4 py-2 border">Aksi</th>
+                        <th class="px-4 py-2 border">ID</th>
+                        <th class="px-4 py-2 border">Nama</th>
+                        <th class="px-4 py-2 border">Alamat</th>
+                        <th class="px-4 py-2 border">Telepon</th>
+                        <th class="px-4 py-2 border">Email</th>
+                        <th class="px-4 py-2 border text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="pelanggan in pelanggan" :key="pelanggan.id" class="hover:bg-gray-100">
                         <td class="px-4 py-2 border">{{ pelanggan.id_pelanggan }}</td>
-                        <td class=" px-4 py-2 border">{{ pelanggan.nama }}</td>
+                        <td class="px-4 py-2 border">{{ pelanggan.nama }}</td>
                         <td class="px-4 py-2 border">{{ pelanggan.alamat }}</td>
                         <td class="px-4 py-2 border">{{ pelanggan.telepon }}</td>
                         <td class="px-4 py-2 border">{{ pelanggan.email }}</td>
-
                         <td class="px-4 py-2 border">
-                            <div class="flex flex-wrap gap-2">
+                            <div class="flex flex-wrap gap-2 justify-center">
                                 <button @click="openModalshow(pelanggan)"
-                                    class="px-3 py-1 bg-emerald-500 text-white text-sm rounded-lg hover:bg-emerald-600 transition flex items-center gap-1">
-                                    <i class="fas fa-eye"></i>
-                                    Tampilkan
+                                    class="flex items-center gap-1 px-3 py-1 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition">
+                                    <i class="fas fa-eye"></i> Tampil
                                 </button>
                                 <button @click="openModalEdit(pelanggan)"
-                                    class="px-3 py-1 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition flex items-center gap-1">
-                                    <i class="fas fa-edit"></i>
-                                    Edit
+                                    class="flex items-center gap-1 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                                    <i class="fas fa-edit"></i> Edit
                                 </button>
                                 <button @click="deletepelanggan(pelanggan.id_pelanggan)"
-                                    class="px-3 py-1 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition flex items-center gap-1">
-                                    <i class="fas fa-trash-alt"></i>
-                                    Hapus
+                                    class="flex items-center gap-1 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                                    <i class="fas fa-trash-alt"></i> Hapus
                                 </button>
                             </div>
                         </td>

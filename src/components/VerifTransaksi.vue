@@ -13,36 +13,31 @@
                         class="px-4 bg-emerald-600 border border-black rounded-lg text-white hover:bg-emerald-700 h-[2.6rem]">
                         Filter
                     </button>
-                    <!-- <button @click="resetFilter"
-                        class="px-4 bg-gray-500 border border-black rounded-lg text-white hover:bg-gray-600 ml-2 h-[2.6rem]">
-                        Reset
-                    </button> -->
                 </div>
             </div>
         </div>
-
-        <div class="overflow-x-auto font-Roboto pt-6">
-            <table class="min-w-full bg-white border border-gray-200 shadow-md text-base rounded-lg">
-                <thead>
-                    <tr class="bg-gray-200 text-left">
-                        <th class="pl-20 py-3 border-b border-gray-300">No</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Kode</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Detail</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Tanggal</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Waktu</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Jumlah</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Diskon</th>
-                        <th class="px-4 py-3 border-b border-gray-300">Harga Total</th>
-                        <th class="pl-8 py-3 border-b border-gray-300">Metode Bayar</th>
-                        <th class="pl-8 py-3 border-b border-gray-300">Status Bayar</th>
-                        <th class="pl-8 py-3 border-b border-gray-300">Aksi</th>
+        <div class="overflow-x-auto font-Roboto py-4">
+            <table class="min-w-full bg-white border border-gray-200 shadow-md text-sm rounded-lg">
+                <thead class="text-white">
+                    <tr class="bg-emerald-600 text-left">
+                        <th class="pl-20 py-2 border-b border">No</th>
+                        <th class="px-4 py-2 border-b border">Kode</th>
+                        <th class="px-4 py-2 border-b border">Detail</th>
+                        <th class="px-4 py-2 border-b border">Tanggal</th>
+                        <th class="px-4 py-2 border-b border">Waktu</th>
+                        <th class="px-4 py-2 border-b border">Jumlah</th>
+                        <th class="px-4 py-2 border-b border">Diskon</th>
+                        <th class="px-4 py-2 border-b border">Harga Total</th>
+                        <th class="pl-8 py-2 border-b border">Metode Bayar</th>
+                        <th class="pl-8 py-2 border-b border">Status Bayar</th>
+                        <th class="pl-8 py-2 border-b border">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="transaksi in paginatedTransaksi" :key="transaksi.id" class="hover:bg-gray-100">
-                        <td class="pl-20 py-2 border-b border-gray-300 font-bold">{{ transaksi.id_transaksi }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{ transaksi.kode_transaksi }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300 text-sm">
+                        <td class="pl-20 py-2 border-b border font-bold">{{ transaksi.id_transaksi }}</td>
+                        <td class="px-4 py-2 border-b border">{{ transaksi.kode_transaksi }}</td>
+                        <td class="px-4 py-2 border-b border text-sm">
                             <div class="flex">
                                 <div class="cursor-pointer p-2 rounded hover:bg-gray-200 items-center"
                                     @click="showDetail(transaksi)">
@@ -54,15 +49,15 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{ transaksi.created_at.split('T')[0] }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{
+                        <td class="px-4 py-2 border-b border">{{ transaksi.created_at.split('T')[0] }}</td>
+                        <td class="px-4 py-2 border-b border">{{
                             transaksi.created_at.split('T')[1].split("-")[0] }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{ sumJumlah(transaksi.obats) }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{ formattedRupiah(transaksi.diskon) }}</td>
-                        <td class="px-4 py-2 border-b border-gray-300">{{ formattedRupiah(transaksi.total_harga) }}</td>
-                        <td class="px-10 py-2 border-b border-gray-300">{{ transaksi.metode_bayar }}</td>
-                        <td class="px-10 py-2 border-b border-gray-300">{{ transaksi.status }}</td>
-                        <td class="px-4 pb-4 border-b border-gray-300 flex items-center space-x-4 pt-6">
+                        <td class="px-4 py-2 border-b border">{{ sumJumlah(transaksi.obats) }}</td>
+                        <td class="px-4 py-2 border-b border">{{ formattedRupiah(transaksi.diskon) }}</td>
+                        <td class="px-4 py-2 border-b border">{{ formattedRupiah(transaksi.total_harga) }}</td>
+                        <td class="px-10 py-2 border-b border">{{ transaksi.metode_bayar }}</td>
+                        <td class="px-10 py-2 border-b border">{{ transaksi.status }}</td>
+                        <td class="px-4 pb-4 border-b border flex items-center space-x-4 pt-6">
                             <button @click="openEditModal(transaksi)">
                                 <div class="p-2 rounded hover:bg-gray-200 cursor-pointer relative -top-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -77,29 +72,19 @@
                 </tbody>
             </table>
             <div>
-                <div class="flex justify-end pt-6 pr-20">
-                    <div class="flex justify-between space-x-4">
-                        <button>
-                            <div @click="prevPage"
-                                class="border border-black bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">
-                                <div>
-                                    <h1>Prev</h1>
-                                </div>
-                            </div>
-                        </button>
-                        <div class="text-center mt-4">
-                            <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                        </div>
-                        <button>
-                            <div @click="nextPage"
-                                class="border border-black bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-6 rounded-md">
-                                <div>
-                                    <h1>Next</h1>
-                                </div>
-                            </div>
-                        </button>
-                    </div>
+                <div class="flex justify-end pt-4 pr-6">
+                <div class="flex items-center space-x-4 text-sm">
+                    <button @click="prevPage"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1 rounded-md border border-black">
+                        Prev
+                    </button>
+                    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                    <button @click="nextPage"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1 rounded-md border border-black">
+                        Next
+                    </button>
                 </div>
+            </div>
             </div>
         </div>
 
